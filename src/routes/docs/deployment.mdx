@@ -1,0 +1,98 @@
+---
+title: Deployment
+description: How to deploy your Jekyll Solidbase Theme site
+---
+
+# Deployment
+
+Learn how to deploy your Jekyll Solidbase Theme site to various platforms.
+
+## GitHub Pages
+
+The easiest way to deploy is using GitHub Pages:
+
+1. Push your site to a GitHub repository
+2. Enable GitHub Pages in repository settings
+3. Set the source to "GitHub Actions"
+4. Create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build site
+      run: npx tsx build.ts
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        exclude_assets: '.github,node_modules,src,*.ts,*.json,*.lock'
+```
+
+## Netlify
+
+Deploy to Netlify with continuous integration:
+
+1. Connect your GitHub repository to Netlify
+2. Set build command: `npx tsx build.ts`
+3. Set publish directory: `./`
+4. Deploy!
+
+## Vercel
+
+Deploy to Vercel:
+
+1. Import your GitHub repository
+2. Set framework preset to "Other"
+3. Set build command: `npx tsx build.ts`
+4. Set output directory: `./`
+5. Deploy!
+
+## Manual Deployment
+
+For manual deployment to any static hosting provider:
+
+1. Run the build command:
+   ```bash
+   npm install
+   npx tsx build.ts
+   ```
+
+2. Upload the generated files (excluding source files) to your hosting provider
+
+3. Ensure your server serves `index.html` for all routes (SPA routing)
+
+## Build Process
+
+The build process does the following:
+
+1. Reads configuration from `_config.yml`
+2. Builds the SolidJS application with Vinxi
+3. Copies build output to the root directory
+4. Cleans up temporary build directories (`.output`, `.vinxi`)
+
+This ensures your site is ready for Jekyll hosting while using modern web technologies.

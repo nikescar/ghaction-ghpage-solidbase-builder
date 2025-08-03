@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "strict": true,
+    "noEmit": true,
+    "types": ["vinxi/types/client", "vite-plugin-arraybuffer/types"],
+    "isolatedModules": true,
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "allowImportingTsExtensions": true,
+  }
+}

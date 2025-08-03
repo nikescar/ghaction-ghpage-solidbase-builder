@@ -1,0 +1,34 @@
+{
+  "name": "jekyll-theme-solidbase",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "npm run validate:yaml && tsx build.ts",
+    "build:vinxi": "vinxi build",
+    "start": "vinxi start",
+    "clean": "rm -rf .vinxi .output assets index.html*",
+    "version": "vinxi version",
+    "validate:yaml": "node scripts/validate-yaml.js",
+    "validate": "npm run validate:yaml"
+  },
+  "dependencies": {
+    "@kobalte/solidbase": "^0.2.16",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.3",
+    "@solidjs/start": "^1.1.6",
+    "solid-js": "^1.9.7",
+    "vinxi": "^0.5.8"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@iconify-json/ri": "^1.2.5",
+    "@solid-mediakit/og": "^0.4.1",
+    "@vercel/og": "^0.7.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "yaml": "^2.8.0"
+  }
+}

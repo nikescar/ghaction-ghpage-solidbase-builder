@@ -144,7 +144,7 @@ async function reorganizeDirectories() {
     
     // Move _build directory
     const buildSrc = path.join(outputPublicPath, '_build');
-    const buildDest = path.join(assetsDir, '_build');
+    const buildDest = path.join(assetsDir, 'build');
     
     try {
       await fs.access(buildSrc);
@@ -155,14 +155,14 @@ async function reorganizeDirectories() {
       } catch {}
       
       await fs.rename(buildSrc, buildDest);
-      console.log("✅ Moved _build to assets/_build");
+      console.log("✅ Moved _build to assets/build");
     } catch (error) {
       console.log("ℹ️  No _build directory found to move");
     }
     
     // Move _server directory
     const serverSrc = path.join(outputPublicPath, '_server');
-    const serverDest = path.join(assetsDir, '_server');
+    const serverDest = path.join(assetsDir, 'server');
     
     try {
       await fs.access(serverSrc);
@@ -173,7 +173,7 @@ async function reorganizeDirectories() {
       } catch {}
       
       await fs.rename(serverSrc, serverDest);
-      console.log("✅ Moved _server to assets/_server");
+      console.log("✅ Moved _server to assets/server");
     } catch (error) {
       console.log("ℹ️  No _server directory found to move");
     }
@@ -201,10 +201,10 @@ async function updateAssetReferencesInOutput(outputDir: string) {
           const originalContent = content;
           
           // Update references to point to new asset locations
-          content = content.replace(/\/_build\//g, '/assets/_build/');
-          content = content.replace(/\/_server\//g, '/assets/_server/');
-          content = content.replace(/"_build\//g, '"assets/_build/');
-          content = content.replace(/"_server\//g, '"assets/_server/');
+          content = content.replace(/\/_build\//g, '/assets/build/');
+          content = content.replace(/\/_server\//g, '/assets/server/');
+          content = content.replace(/"_build\//g, '"assets/build/');
+          content = content.replace(/"_server\//g, '"assets/server/');
           
           // For CSS files in assets directory, we need to update font references
           // that were moved from /_build/assets/ to /assets/ (root level)
@@ -244,16 +244,16 @@ async function updateAssetReferencesInRoot() {
           const originalContent = content;
           
           // Check if file already has the correct references
-          if (content.includes('/assets/_build/') || content.includes('/assets/_server/')) {
+          if (content.includes('/assets/build/') || content.includes('/assets/server/')) {
             console.log(`ℹ️  File ${file.name} already has correct asset references`);
             continue;
           }
           
           // Update references to point to new asset locations
-          content = content.replace(/\/_build\//g, '/assets/_build/');
-          content = content.replace(/\/_server\//g, '/assets/_server/');
-          content = content.replace(/"_build\//g, '"assets/_build/');
-          content = content.replace(/"_server\//g, '"assets/_server/');
+          content = content.replace(/\/_build\//g, '/assets/build/');
+          content = content.replace(/\/_server\//g, '/assets/server/');
+          content = content.replace(/"_build\//g, '"assets/build/');
+          content = content.replace(/"_server\//g, '"assets/server/');
           
           if (content !== originalContent) {
             await fs.writeFile(filePath, content, 'utf-8');
@@ -324,7 +324,7 @@ async function copyForJekyllIntegration() {
 async function updateAssetReferencesInMovedDirs() {
   console.log("🔗 Updating asset references in moved directories...");
   
-  const dirsToCheck = ['assets/_build', 'assets/_server'];
+  const dirsToCheck = ['assets/build', 'assets/server'];
   
   for (const dir of dirsToCheck) {
     const dirPath = path.join(process.cwd(), dir);
@@ -367,19 +367,19 @@ async function updateReferencesRecursively(dirPath: string) {
           content = content.replace(/url\("_server\/assets\//g, 'url("/assets/');
           content = content.replace(/url\('_server\/assets\//g, 'url(\'/assets/');
           
-          // Other _build references should point to /assets/_build/
-          content = content.replace(/\/_build\//g, '/assets/_build/');
-          content = content.replace(/"_build\//g, '"/assets/_build/');
-          content = content.replace(/url\(_build\//g, 'url(/assets/_build/');
-          content = content.replace(/url\("_build\//g, 'url("/assets/_build/');
-          content = content.replace(/url\('_build\//g, 'url(\'/assets/_build/');
+          // Other _build references should point to /assets/build/
+          content = content.replace(/\/_build\//g, '/assets/build/');
+          content = content.replace(/"_build\//g, '"/assets/build/');
+          content = content.replace(/url\(_build\//g, 'url(/assets/build/');
+          content = content.replace(/url\("_build\//g, 'url("/assets/build/');
+          content = content.replace(/url\('_build\//g, 'url(\'/assets/build/');
           
-          // Other _server references should point to /assets/_server/
-          content = content.replace(/\/_server\//g, '/assets/_server/');
-          content = content.replace(/"_server\//g, '"/assets/_server/');
-          content = content.replace(/url\(_server\//g, 'url(/assets/_server/');
-          content = content.replace(/url\("_server\//g, 'url("/assets/_server/');
-          content = content.replace(/url\('_server\//g, 'url(\'/assets/_server/');
+          // Other _server references should point to /assets/server/
+          content = content.replace(/\/_server\//g, '/assets/server/');
+          content = content.replace(/"_server\//g, '"/assets/server/');
+          content = content.replace(/url\(_server\//g, 'url(/assets/server/');
+          content = content.replace(/url\("_server\//g, 'url("/assets/server/');
+          content = content.replace(/url\('_server\//g, 'url(\'/assets/server/');
           
           if (content !== originalContent) {
             await fs.writeFile(fullPath, content, 'utf-8');
@@ -595,30 +595,6 @@ async function generateAppConfigFromJekyll(): Promise<void> {
   
   console.log("✅ Successfully updated app.config.ts from _config.yml");
   console.log(`📋 Configuration: title="${currentTitle}", routes=${routesArray.length} total`);
-}
-
-async function discoverMarkdownFiles(dirPath: string): Promise<Array<{ title: string; link: string; }>> {
-  const routes: Array<{ title: string; link: string; }> = [];
-  
-  try {
-    const entries = await fs.readdir(dirPath, { withFileTypes: true });
-    
-    for (const entry of entries) {
-      if (entry.isFile() && entry.name.endsWith('.md')) {
-        const fileName = entry.name.replace('.md', '');
-        const title = fileName.split('-').map(word => 
-          word.charAt(0).toUpperCase() + word.slice(1)
-        ).join(' ');
-        
-        const link = `${dirPath.replace('./', '/')}/${fileName}`;
-        routes.push({ title, link });
-      }
-    }
-  } catch {
-    // Directory doesn't exist or can't be read
-  }
-  
-  return routes;
 }
 
 async function customBuild() {

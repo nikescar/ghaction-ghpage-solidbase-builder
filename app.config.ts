@@ -72,25 +72,30 @@ if (fs.existsSync(configPath)) {
 	console.warn("_config.yaml not found, using default configuration.");
 }
 
-export default defineConfig(
-	createWithSolidBase(defaultTheme)(
-		{
+export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/reference/entrypoints/app-config
+	createWithSolidBase(defaultTheme)( // solid defineConfig https://start.solidjs.com/docs/config
+		{ // vinxi https://vinxi.vercel.app/api/app.html
 			ssr: false,
-			vite: { plugins: [OGPlugin() as any] },
-			server: {
+			vite({ router }) { // vite https://vitejs.dev/config/
+				if (router === "server") {
+				} else if (router === "client") {
+					return {
+						base: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
+						plugins: [OGPlugin() as any],
+					}
+				} else if (router === "server-function") {
+				}
+				return { plugins: [] };
+			},
+			server: { // nitro https://nitro.build/config
+				baseURL: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
 				compatibilityDate: "2025-05-26",
-				preset: "static",
-				prerender: {
-					routes: ["/", ...routes.map(r => r.slug),
-						'/about',
-						'/docs'],
-					crawlLinks: true,
-				},
+				preset: "github_pages",
+				// legacyExternals: true,
 			},
 		},
 		{
 			title: ymlconfigs.title || "Jekyll Solidbase Theme",
-			// get theme_settings.en from ymlconfigs
 			lang: ymlconfigs.theme_settings?.en?.lang || "en",
 			themeConfig: {
 				socialLinks: {

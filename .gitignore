@@ -63,3 +63,6 @@ index.html*
 pnpm-lock.yaml
 assets/*
 package-lock.json
+.nojekyll
+
+404.html*

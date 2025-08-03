@@ -1,161 +1,58 @@
-# this _config.yml be read from jekyll, solidjs
+# configuration for vite.docs solidbase https://github.com/nikescar/jekyll-theme-solidbase
 # Site settings
 title: Jekyll Solidbase Theme
 description: Solidbase Theme to Jekyll to use with GitHub Pages.
 show_downloads: true
-remote_theme: nikescar/jekyll-theme-solidbase
-plugins:
-  - jekyll-remote-theme
 
-# Build settings
-markdown: kramdown
-highlighter: rouge
-permalink: /:categories/:year/:month/:day/:title/
-paginate: 5 # number of posts per page
-paginate_path: "/page:num/"
-timezone: Asia/Seoul # e.g. America/New_York
-encoding: utf-8
-kramdown:
-  input: GFM # GitHub Flavored Markdown
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: 'highlight'
-safe: false # Set to true if you are hosting on GitHub Pages
-lsi: false # Learnability of Semantic Information
-excerpt_separator: <!--more-->
-
-# Collections
-collections:
-  my_collection:
-    output: true
-    permalink: /my_collection/:path/
-
-# Defaults
-defaults:
-  -
-    scope:
-      path: "" # an empty string here means all files in the project
-      type: "posts" # can be "posts", "pages", "collections", or "documents"
-    values:
-      layout: "post"
-  -
-    scope:
-      path: "_pages"
-      type: "pages"
-    values:
-      layout: "page"
-
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
 # Excluded items can be re-enabled by adding them to the `include:` list.
 exclude:
-  - .sass-cache/
-  - .jekyll-cache/
-  - gemfiles/
+  - _includes
+  - _layouts
+  - .github
+  - .output
+  - .vinxi
+  - node_modules
+  - scripts
+  - tmp
+  - _config.yml
+  - _config.jekyll.yml
+  - app.config.ts
+  - build.ts
   - Gemfile
   - Gemfile.lock
-  - node_modules/
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - tmp/
-  - jekyll-theme-solidbase.gemspec
+  - package.json
+  - package-lock.json
+  - pnpm-lock.yaml
+  - tsconfig.json
 
 # Include in processing.
 # The following items will be processed, even if they would otherwise be excluded.
 include:
   - .well-known/
-
-# Liquid Options
-liquid:
-  error_mode: strict # warn or strict
-  strict_filters: true
-  strict_variables: true
-
-# Custom variables (optional)
-my_custom_variable: "This is a custom value."
-
-# Development server config, needed to load some of the content
-# webrick:
-#  headers:
-#    Access-Control-Allow-Origin: "*"
-
-# github-pages v232
-# jekyll v3.10.0
-
-# jekyll-theme-primer
-# jekyll-seo-tag
-# jekyll-coffeescript
-# jekyll-build-nodejs
-
-# https://github.com/github/jekyll-commonmark-ghpages
-# markdown: CommonMarkGhPages
-# commonmark:
-#   options: ["UNSAFE", "SMART", "FOOTNOTES"]
-#   extensions: ["strikethrough", "autolink", "table", "tagfilter"]
-
-# https://github.com/jekyll/jekyll-gist
-# gist:
-#   noscript: false
-
-# https://github.com/jekyll/github-metadata
-# https://github.com/jekyll/github-metadata/blob/main/docs/configuration.md
-# https://github.com/jekyll/github-metadata/blob/main/docs/site.github.md
-# https://github.com/jekyll/github-metadata/blob/main/docs/edit-on-github-link.md
-
-# https://github.com/benbalter/jekyll-optional-front-matter
-optional_front_matter:
-  enabled: false
-# https://github.com/benbalter/jekyll-readme-index
-readme_index:
-  enabled:          true
-  remove_originals: false
-  with_frontmatter: false
-# https://github.com/benbalter/jekyll-relative-links
-relative_links:
-  enabled:     true
-  collections: false
-  exclude:
-    - directory
-    - file.md
-# https://github.com/benbalter/jekyll-default-layout/blob/main/README.md#usage
-layout: null
-# https://github.com/benbalter/jekyll-titles-from-headings#configuration
-titles_from_headings:
-  enabled:     true
-  strip_title: false
-  collections: false
-# https://github.com/benbalter/jekyll-remote-theme
-# remote_theme: http[s]://github.<Enterprise>.com/benbalter/retlab
+  - index.md
+  - docs/
+  - resources/
 
 # Theme settings
 site_author: Woojae, Park
 repo_url: 'https://github.com/nikescar/jekyll-theme-solidbase'
-edit_on_github: true
-github_docs_folder: false
-sticky_navigation: true
-search_enabled: false
-logo: 'https://your.url/image.png'
-site_favicon: 'https://your.url/here.ico'
-theme: 'https://your.url/assets/css/theme.css'
-extra_theme: 'https://your.url/assets/css/theme_extra.css'
-# The highlight.js library provides 79 different colours for their syntax highlighting. The default is github-gist.
-hljs_style: github-gist
+site_url: 'https://nikescar.github.io/jekyll-theme-solidbase/'
+# edit_on_github: true
+# github_docs_folder: false
+# sticky_navigation: true
+# search_enabled: false
+# logo: 'https://your.url/image.png'
+site_favicon: './resources/favicon.ico'
 
 theme_settings:
   social_links:
-    GitHub: 'https://github.com/solidjs-community/mediakit'
-    Twitter: 'https://twitter.com/solidjs'
+    GitHub: 'https://github.com/nikescar/jekyll-theme-solidbase'
   en:
-    title: Jekyll Solidbase Theme - Updated
+    title: Jekyll Solidbase Theme
     lang: en
     nav:
-      Docs: /docs
-      About: /about
+      Docs: /jekyll-theme-solidbase/docs
+      About: /jekyll-theme-solidbase/about
       # - Packages: /packages
       # - Blog: /blog
     sidebar:
@@ -166,5 +63,3 @@ theme_settings:
             Configuration: /configuration
             Deployment: /deployment
             "Advanced Usage": /advanced
-
-# build

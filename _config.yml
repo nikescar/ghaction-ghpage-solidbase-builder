@@ -33,6 +33,7 @@ include:
   - docs
   - resources
   - README.md
+  - CREDITS.md
 
 # Theme settings
 site_author: Woojae, Park
@@ -55,6 +56,7 @@ theme_settings:
     nav:
       Docs: /docs
       Readme: /readme
+      Credits: /credits
       # - Packages: /packages
       # - Blog: /blog
     sidebar:

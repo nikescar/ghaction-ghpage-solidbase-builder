@@ -32,6 +32,7 @@ include:
   - index.md
   - docs
   - resources
+  - README.md
 
 # Theme settings
 site_author: Woojae, Park
@@ -53,7 +54,7 @@ theme_settings:
     lang: en
     nav:
       Docs: /docs
-      About: /about
+      Readme: /readme
       # - Packages: /packages
       # - Blog: /blog
     sidebar:

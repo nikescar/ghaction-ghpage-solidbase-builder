@@ -5,94 +5,150 @@ description: How to deploy your Jekyll Solidbase Theme site
 
 # Deployment
 
-Learn how to deploy your Jekyll Solidbase Theme site to various platforms.
+Learn how to deploy your Jekyll Solidbase Theme site using GitHub Workflow.
 
-## GitHub Pages
+**Current Status:** This theme currently uses GitHub Workflow for deployment rather than traditional Jekyll processing. Jekyll integration is planned for future development.
 
-The easiest way to deploy is using GitHub Pages:
+## GitHub Pages (Recommended)
 
-1. Push your site to a GitHub repository
-2. Enable GitHub Pages in repository settings
-3. Set the source to "GitHub Actions"
-4. Create `.github/workflows/deploy.yml`:
+The theme is designed to work seamlessly with GitHub Pages using GitHub Actions workflow:
+
+### Prerequisites
+
+1. A GitHub repository containing your documentation
+2. GitHub Pages enabled in repository settings
+3. Source set to "GitHub Actions"
+
+### Setup
+
+1. **Create the deployment workflow** at `.github/workflows/vite.docs.yml`:
 
 ```yaml
-name: Deploy to GitHub Pages
-
+name: Deploy vite built sites to github pages
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${ { steps.deployment.outputs.page_url } }
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm install
-    
-    - name: Build site
-      run: npx tsx build.ts
-    
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${ { secrets.GITHUB_TOKEN } }
-        publish_dir: ./
-        exclude_assets: '.github,node_modules,src,*.ts,*.json,*.lock'
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clone solidbase theme github
+        run: |
+          git clone https://github.com/nikescar/jekyll-theme-solidbase.git .solidbase --depth 1
+          pushd ./.solidbase
+          bash ghworkflow.sh
+          popd
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './.solidbase/.output/public'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 ```
 
-## Netlify
+2. **Configure your site** with `_config.yml`:
 
-Deploy to Netlify with continuous integration:
+```yaml
+# Site settings
+title: Your Site Title
+description: Your site description
 
-1. Connect your GitHub repository to Netlify
-2. Set build command: `npx tsx build.ts`
-3. Set publish directory: `./`
-4. Deploy!
+# Include in processing
+include:
+  - index.md
+  - docs/
+  - resources/
 
-## Vercel
+# Exclude from processing  
+exclude:
+  - _includes
+  - _layouts
+  - .github
+  - node_modules
 
-Deploy to Vercel:
+# Theme settings
+site_author: Your Name
+repo_url: 'https://github.com/yourusername/your-repo'
+site_url: 'https://yourusername.github.io/your-repo'
+site_favicon: './resources/favicon.ico'
+```
 
-1. Import your GitHub repository
-2. Set framework preset to "Other"
-3. Set build command: `npx tsx build.ts`
-4. Set output directory: `./`
-5. Deploy!
+3. **Enable GitHub Pages**:
+   - Go to repository Settings → Pages
+   - Source: GitHub Actions
+   - Save
 
-## Manual Deployment
+4. **Deploy**: Push changes to the main branch and the workflow will automatically build and deploy your site.
 
-For manual deployment to any static hosting provider:
+## How the Deployment Works
 
-1. Run the build command:
-   ```bash
-   npm install
-   npx tsx build.ts
-   ```
+The GitHub workflow performs these steps:
 
-2. Upload the generated files (excluding source files) to your hosting provider
+1. **Checkout** your repository content
+2. **Clone** the Jekyll Solidbase Theme to `.solidbase/` directory
+3. **Execute** the build script (`ghworkflow.sh`) which:
+   - Copies your content to the theme's source directory
+   - Processes include/exclude rules from `_config.yml`
+   - Installs npm dependencies
+   - Builds the SolidJS application with Vinxi
+   - Copies static assets and favicon
+4. **Upload** the built site to GitHub Pages
+5. **Deploy** to your GitHub Pages URL
 
-3. Ensure your server serves `index.html` for all routes (SPA routing)
+## Build Process Details
 
-## Build Process
+The `ghworkflow.sh` script handles:
 
-The build process does the following:
+- **Content Integration**: Copies your markdown files and assets into the theme structure
+- **Configuration Processing**: Reads your `_config.yml` for include/exclude rules
+- **Asset Management**: Handles favicon, images, and other static resources
+- **SolidJS Build**: Compiles the modern web application
+- **Output Preparation**: Prepares the final static site for deployment
 
-1. Reads configuration from `_config.yml`
-2. Builds the SolidJS application with Vinxi
-3. Copies build output to the root directory
-4. Cleans up temporary build directories (`.output`, `.vinxi`)
+## Troubleshooting
 
-This ensures your site is ready for Jekyll hosting while using modern web technologies.
+### Common Issues
+
+1. **Workflow fails**: Check that GitHub Pages is enabled and source is set to "GitHub Actions"
+2. **404 errors**: Ensure your `site_url` in `_config.yml` matches your GitHub Pages URL
+3. **Missing assets**: Check that files are included in the `include:` section of `_config.yml`
+4. **Build errors**: Verify that your markdown files have valid frontmatter
+
+### Checking Deployment Status
+
+1. Go to your repository's "Actions" tab
+2. Click on the latest workflow run
+3. Review the logs for any errors
+4. Check that the deployment step completed successfully
+
+## Future: Traditional Jekyll Support
+
+Traditional Jekyll theme usage with `remote_theme` is planned for future development. This will allow:
+
+- Standard Jekyll site generation
+- Local development with `bundle exec jekyll serve`
+- Compatibility with existing Jekyll hosting providers
+
+Currently, the theme focuses on providing a modern, fast documentation experience through the GitHub Workflow deployment method.

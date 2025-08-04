@@ -28,15 +28,16 @@ exclude:
 # Include in processing.
 # The following items will be processed, even if they would otherwise be excluded.
 include:
-  - .well-known/
+  - .well-known
   - index.md
-  - docs/
-  - resources/
+  - docs
+  - resources
 
 # Theme settings
 site_author: Woojae, Park
 repo_url: 'https://github.com/nikescar/jekyll-theme-solidbase'
-site_url: 'https://nikescar.github.io/jekyll-theme-solidbase/'
+# site_url does not support subpaths, so it should be the root URL of your site.
+site_url: 'https://jekyll-theme-solidbase.dure.app'
 # edit_on_github: true
 # github_docs_folder: false
 # sticky_navigation: true
@@ -51,8 +52,8 @@ theme_settings:
     title: Jekyll Solidbase Theme
     lang: en
     nav:
-      Docs: /jekyll-theme-solidbase/docs
-      About: /jekyll-theme-solidbase/about
+      Docs: /docs
+      About: /about
       # - Packages: /packages
       # - Blog: /blog
     sidebar:

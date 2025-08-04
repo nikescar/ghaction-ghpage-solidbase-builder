@@ -12,7 +12,7 @@ hero:
       text: GitHub
       link: https://github.com/nikescar/jekyll-theme-solidbase
   image:
-    src: https://github.com/nikescar/jekyll-theme-solidbase/resources/logo.png
+    src: https://nikescar.github.io/jekyll-theme-solidbase/resources/logo.png
 
 features:
   - 

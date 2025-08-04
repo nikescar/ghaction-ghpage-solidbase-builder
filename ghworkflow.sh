@@ -7,24 +7,22 @@
 # echo "Cleaning routes folder in examples in theme routes..."
 rm -rf ./src/routes/*
 cp ../_config.yml ./
-# echo "Contents of _config.yml:"
-# cat _config.yml
-
-# echo "Contents of parents directory:"
-# ls -al ../
 
 # echo "Copying files from ../ to ./src/routes..."
 inclusion_list=$(yq eval '.include[]' _config.yml)
 exclusion_list=$(yq eval '.exclude[]' _config.yml)
-# echo "Inclusion list: $inclusion_list"
-# echo "Exclusion list: $exclusion_list"
+echo "Inclusion list: $inclusion_list"
+echo "Exclusion list: $exclusion_list"
+
+mkdir -p ./src/routes
+cp "../index.md" ./src/routes/index.md
 
 for item in $inclusion_list; do
-  cp -r ../$item ./src/routes/
+  cp -rf "../${item}" ./src/routes/${item}
 done
 
 for item in $exclusion_list; do
-  rm -rf ./src/routes/$item
+  rm -rf "./src/routes/${item}"
 done
 
 echo "Listing files in src/routes after include and exclude..."
@@ -48,11 +46,11 @@ fi
 
 # copy resources to public
 for item in $inclusion_list; do
-  cp -r ../$item ./.output/public/
+  cp -r "../${item}" ./.output/public/
 done
 
 for item in $exclusion_list; do
-  rm -rf ./.output/public/$item
+  rm -rf "./.output/public/${item}"
 done
 
 ls -alth ./.output/public

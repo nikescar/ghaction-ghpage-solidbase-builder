@@ -64,5 +64,5 @@ pnpm-lock.yaml
 assets/*
 package-lock.json
 .nojekyll
-
+.solidbase/
 404.html*

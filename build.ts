@@ -607,9 +607,9 @@ async function customBuild() {
     console.log("");
     
     // Step 0.5: Generate app.config.ts from _config.yml
-    console.log("🔧 Step 0.5: Updating app.config.ts from _config.yml...");
-    await generateAppConfigFromJekyll();
-    console.log("");
+    // console.log("🔧 Step 0.5: Updating app.config.ts from _config.yml...");
+    // await generateAppConfigFromJekyll();
+    // console.log("");
     
     // Step 1: Run the standard Vinxi build
     console.log("🏗️  Step 1: Running Vinxi build...");

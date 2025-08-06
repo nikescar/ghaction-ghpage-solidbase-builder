@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
-    "build": "npm run validate:yaml && tsx build.ts",
+    "build": "vinxi build",
     "build:vinxi": "vinxi build",
     "start": "vinxi start",
     "clean": "rm -rf .vinxi .output assets index.html* 404.html* _site .solidbase",

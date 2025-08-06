@@ -36,7 +36,7 @@ npx vinxi build
 
 # echo "Copying 404.html to the public directory..."
 rm -rf ./.output/public/404.html*
-cp _includes/_404.html ./.output/public/404.html
+cp _404.html ./.output/public/404.html
 
 favicon_path=$(yq eval '.site_favicon' _config.yml)
 if [ -n "$favicon_path" ]; then

@@ -63,37 +63,37 @@ theme_config:
           Configuration: /configuration
           Deployment: /deployment
 
-locales:
-  kr:
-    label: 한국어
-    themeConfig:
-      nav:
-        -
-          text: 가이드
-          link: /guide
-        -
-          text: 참조
-          link: /Reference
-      sidebar:
-        "/guide":
-          -
-            title: 가이드
-            collapsed: false
-            items:
-              -
-                title: "시작하기"
-                link: "/getting-started"
-              -
-                title: "기능목록"
-                link: "/features"
-              -
-                title: "설정"
-                link: "/configuration"
-              -
-                title: "배포"
-                link: "/deployment"
-        "/reference":
-          -
-            title: 참조
-            collapsed: false
-            items:
+# locales:
+#   kr:
+#     label: 한국어
+#     themeConfig:
+#       nav:
+#         -
+#           text: 가이드
+#           link: /guide
+#         -
+#           text: 참조
+#           link: /Reference
+#       sidebar:
+#         "/guide":
+#           -
+#             title: 가이드
+#             collapsed: false
+#             items:
+#               -
+#                 title: "시작하기"
+#                 link: "/getting-started"
+#               -
+#                 title: "기능목록"
+#                 link: "/features"
+#               -
+#                 title: "설정"
+#                 link: "/configuration"
+#               -
+#                 title: "배포"
+#                 link: "/deployment"
+#         "/reference":
+#           -
+#             title: 참조
+#             collapsed: false
+#             items:

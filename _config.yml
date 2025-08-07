@@ -1,8 +1,13 @@
 # configuration for vite.docs solidbase https://github.com/nikescar/ghaction-ghpage-solidbase-builder
 # Site settings
-title: Jekyll Solidbase Theme
-description: Solidbase Theme to Jekyll to use with GitHub Pages.
+title: Github Action Solidbase Builder
+description: Solidbase Theme for markdown documents to site converter for GitHub Pages.
 show_downloads: true
+
+# 404 page redirection rules
+404_subsite_urls:
+  - /ghaction-ghpage-solidbase-builder/
+  - /ghaction-ghpage-sol-builder/
 
 # Excluded items can be re-enabled by adding them to the `include:` list.
 exclude:
@@ -46,7 +51,7 @@ theme_settings:
   social_links:
     GitHub: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
   en:
-    title: Jekyll Solidbase Theme
+    title: Github Action Solidbase Builder
     lang: en
     nav:
       Docs: /docs

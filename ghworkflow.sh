@@ -36,6 +36,14 @@ npx vinxi build
 
 # echo "Copying 404.html to the public directory..."
 rm -rf ./.output/public/404.html*
+# get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
+subsite_urls=$(yq eval '.404_subsite_urls | join(", ")' _config.yml)
+if [ -n "$subsite_urls" ]; then
+  echo "Subsite URLs for 404 redirection: $subsite_urls"
+  sed -i "s/_s=\[\];/_s=[$subsite_urls];/" ./.output/public/404.html
+else
+  echo "No subsite URLs found for 404 redirection."
+fi
 cp _404.html ./.output/public/404.html
 
 favicon_path=$(yq eval '.site_favicon' _config.yml)

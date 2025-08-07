@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="refresh" content="0; url=/?_g="+window.location.pathname>
-  <title>Redirecting...</title>
-</head>
-<body>
-  If you are not redirected automatically, <a href="index.php">click here</a>.
-  <script>window.location.href="/?_g="+window.location.pathname;</script>
-</body>
-</html>
+<script>
+_s=[];
+function _r(url) {
+  try {
+    const { pathname, search } = new URL(url);
+    return pathname + search;
+  } catch (e) {
+    console.error("Invalid URL:", e);
+    return null;
+  }
+}
+_s.some(subsite => {
+  const _t=_r(window.location.href);
+  if (_t.startsWith(subsite)){
+    window.location.href = _t + "?_g=" + window.location.pathname;
+  }
+})
+window.location.href="/?_g="+window.location.pathname;
+</script>

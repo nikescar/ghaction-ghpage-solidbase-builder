@@ -16,16 +16,24 @@ export const ContentFilter: Component<ContentFilterProps> = (props) => {
     links.forEach((link) => {
       const href = link.getAttribute('href')
       if (href) {
-        // Check if it's an internal link (starts with / or relative path)
+        // Check if it's an internal link (starts with / or relative path) and end with .md or .mdx
         const isInternal = href.startsWith('/') || (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:') && !href.startsWith('#'))
-        
-        if (isInternal) {
+        const isMarkdown = href.endsWith('.md') || href.endsWith('.mdx')
+
+        if (isInternal && isMarkdown) {
           // Remove .md and .mdx extensions while preserving query parameters and hash fragments
           const cleanHref = href.replace(/\.(mdx?)(\?[^#]*)?(#.*)?$/, '$2$3')
           if (cleanHref !== href) {
             link.setAttribute('href', cleanHref)
           }
         }
+
+        // Check if the url includes github.com and part of url has "/src/routes/" than remove "/src/routes" text
+        if (href.includes('github.com') && href.includes('/src/routes/')) {
+          const cleanHref = href.replace('/src/routes', '')
+          link.setAttribute('href', cleanHref)
+        }
+        
       }
     })
   }

@@ -73,14 +73,14 @@ if (fs.existsSync(configPath)) {
 }
 
 export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/reference/entrypoints/app-config
-	createWithSolidBase(defaultTheme)( // solid defineConfig https://start.solidjs.com/docs/config
+	createWithSolidBase(defaultTheme)( // solid defineConfig docs.solidjs.com/solid-start/reference/config/define-config
 		{ // vinxi https://vinxi.vercel.app/api/app.html
 			ssr: false,
 			vite({ router }) { // vite https://vitejs.dev/config/
 				if (router === "server") {
 				} else if (router === "client") {
 					return {
-						// base: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
+						base: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
 						plugins: [OGPlugin() as any],
 					}
 				} else if (router === "server-function") {
@@ -88,7 +88,7 @@ export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/r
 				return { plugins: [] };
 			},
 			server: { // nitro https://nitro.build/config
-				// baseURL: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
+				baseURL: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
 				compatibilityDate: "2025-05-26",
 				preset: "github_pages",
 				// legacyExternals: true,

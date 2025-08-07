@@ -39,7 +39,7 @@ include:
 site_author: Woojae, Park
 repo_url: 'https://github.com/nikescar/jekyll-theme-solidbase'
 # site_url does not support subpaths, so it should be the root URL of your site.
-site_url: 'https://jekyll-theme-solidbase.dure.app'
+site_url: 'http://nikescar.github.io/ghaction-ghpage-solidbase-builder/'
 # edit_on_github: true
 # github_docs_folder: false
 # sticky_navigation: true

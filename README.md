@@ -23,6 +23,8 @@ This project provides a complete solution for converting Markdown documentation 
 
 ## 3. Prerequisites
 
+Make your documentation directory like below.
+
 ```
 documentation_repo/
 ├── 📄 Configuration Files
@@ -47,27 +49,11 @@ documentation_repo/
 
 ### 4-1. with Github Workflow
 
-copy ./.github/workflows/vite.doc.yml file to your repository and edit.
-
-```yaml
-# Add to .github/workflows/pages.yml
-name: Deploy to GitHub Pages
-on:
-  push:
-    branches: [ main ]
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: your-org/mdx-sitegen-solidbase@v1
-        with:
-          config-file: '_config.yml'
-```
+Copy [.github/workflows/vite.doc.yml](.github/workflows/vite.doc.yml) file to your repository.
 
 ### 4-2. with Github Action
 
-in your workflow, add following snippet.
+in your github workflow, add following snippet.
 
 ```yaml
 

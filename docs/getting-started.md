@@ -91,7 +91,7 @@ repo_url: 'https://github.com/yourusername/your-repo'
 site_url: 'https://yourusername.github.io/your-repo'
 site_favicon: './resources/favicon.ico'
 
-theme_settings:
+theme_config:
   social_links:
     GitHub: 'https://github.com/yourusername/your-repo'
 ```

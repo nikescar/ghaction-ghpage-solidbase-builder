@@ -44,39 +44,39 @@ function validateYAMLConfig() {
       validationResults.push('⚠️  Warning: Missing "description" field');
     }
     
-    // Check theme settings
-    if (!config.theme_settings) {
-      validationResults.push('❌ Error: Missing "theme_settings" section');
+    // Check theme config
+    if (!config.theme_config) {
+      validationResults.push('❌ Error: Missing "theme_config" section');
     } else {
-      console.log('✓ Found theme_settings section');
+      console.log('✓ Found theme_config section');
       
       // Check social links
-      if (config.theme_settings.social_links) {
-        console.log(`✓ Social links configured: ${Object.keys(config.theme_settings.social_links).length} links`);
+      if (config.theme_config.social_links) {
+        console.log(`✓ Social links configured: ${Object.keys(config.theme_config.social_links).length} links`);
       }
       
       // Check language settings
-      if (!config.theme_settings.en) {
-        validationResults.push('⚠️  Warning: Missing "theme_settings.en" section');
+      if (!config.theme_config.en) {
+        validationResults.push('⚠️  Warning: Missing "theme_config.en" section');
       } else {
         console.log('✓ Found English language settings');
         
         // Check navigation
-        if (config.theme_settings.en.nav) {
-          const navCount = Object.keys(config.theme_settings.en.nav).length;
+        if (config.theme_config.en.nav) {
+          const navCount = Object.keys(config.theme_config.en.nav).length;
           console.log(`✓ Navigation configured: ${navCount} items`);
         }
         
         // Check sidebar
-        if (config.theme_settings.en.sidebar) {
+        if (config.theme_config.en.sidebar) {
           console.log('✓ Sidebar configuration found');
           
           // Validate sidebar structure
-          if (Array.isArray(config.theme_settings.en.sidebar)) {
-            console.log(`✓ Sidebar has ${config.theme_settings.en.sidebar.length} section(s)`);
+          if (Array.isArray(config.theme_config.en.sidebar)) {
+            console.log(`✓ Sidebar has ${config.theme_config.en.sidebar.length} section(s)`);
             
             // Check each sidebar section
-            config.theme_settings.en.sidebar.forEach((section, index) => {
+            config.theme_config.en.sidebar.forEach((section, index) => {
               if (typeof section === 'object') {
                 const sectionKeys = Object.keys(section);
                 if (sectionKeys.length > 0) {

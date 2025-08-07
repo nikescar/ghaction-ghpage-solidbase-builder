@@ -41,7 +41,7 @@ site_url: 'https://yourusername.github.io/your-repo'
 site_favicon: './resources/favicon.ico'
 
 # Theme settings
-theme_settings:
+theme_config:
   social_links:
     GitHub: 'https://github.com/yourusername/your-repo'
 ```
@@ -146,7 +146,7 @@ Additional content for your homepage goes here.
 Add social media links to your site:
 
 ```yaml
-theme_settings:
+theme_config:
   social_links:
     GitHub: 'https://github.com/username'
     Twitter: 'https://twitter.com/username'

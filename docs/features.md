@@ -78,7 +78,7 @@ exclude:
 
 ### Theme Settings
 ```yaml
-theme_settings:
+theme_config:
   social_links:
     GitHub: 'https://github.com/your-username'
     Twitter: 'https://twitter.com/your-handle'

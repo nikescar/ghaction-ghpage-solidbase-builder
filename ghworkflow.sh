@@ -31,6 +31,12 @@ ls -al ./src/routes/
 echo "Installing npm dependencies..."
 npm install
 
+# get site_url from _config.yml and echo to .env
+site_url=$(yq eval '.site_url' _config.yml)
+if [ -n "$site_url" ]; then
+  echo "VITE_SITE_URL=$site_url" > .env
+fi
+
 # echo "Building the project..."
 npx vinxi build
 
@@ -39,7 +45,6 @@ rm -rf ./.output/public/404.html*
 # get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
 export subsite_urls=$(yq eval '.404_subsite_urls[]' _config.yml | tr '\n' ',' | sed 's/,$//' | sed 's/,/, /g')
 sed -i "s|_s=\[\];|_s=[$subsite_urls];|" ./_404.html
-
 cp _404.html ./.output/public/404.html
 
 favicon_path=$(yq eval '.site_favicon' _config.yml)

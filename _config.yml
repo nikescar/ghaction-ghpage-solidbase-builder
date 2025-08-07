@@ -81,15 +81,17 @@ locales:
             collapsed: false
             items:
               -
-                title: "솔리드 베이스는?"
-                link: "/"
-          -
-            title: 마크다운
-            collapsed: false
-            items:
+                title: "시작하기"
+                link: "/getting-started"
               -
-                title: "마크다운 익스텐션은?"
-                link: "/markdown"
+                title: "기능목록"
+                link: "/features"
+              -
+                title: "설정"
+                link: "/configuration"
+              -
+                title: "배포"
+                link: "/deployment"
         "/reference":
           -
             title: 참조

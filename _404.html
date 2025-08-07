@@ -1,18 +1,9 @@
 <script>
-_s=[/ghaction-ghpage-solidbase-builder/, /ghaction-ghpage-sol-builder/];
-function _r(url) {
-  try {
-    const { pathname, search } = new URL(url);
-    return pathname + search;
-  } catch (e) {
-    console.error("Invalid URL:", e);
-    return null;
-  }
-}
-_s.some(subsite => {
-  const _t=_r(window.location.href);
-  if (_t.startsWith(subsite)){
-    window.location.href = _t + "?_g=" + window.location.pathname;
+_s=[];
+_s.some(_i => {
+  const _t=window.location.pathname + "/";
+  if (_t.startsWith(_i)){
+    window.location.href=_i+"?_g="+window.location.pathname;
   }
 })
 window.location.href="/?_g="+window.location.pathname;

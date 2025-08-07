@@ -96,22 +96,26 @@ export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/r
 		},
 		{
 			title: ymlconfigs.title || "Github Action Solidbase Builder",
-			lang: ymlconfigs.theme_settings?.en?.lang || "en",
+			description: ymlconfigs.description || "Solidbase Theme for markdown documents to site converter for GitHub Pages.",
+			issueAutolink: ymlconfigs.issue_link || "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/issues",
+			editPath: ymlconfigs.edit_path || "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/edit/main/:path",
+			lang: ymlconfigs.lang || "en",
+			locales: ymlconfigs.locales || {},
 			themeConfig: {
 				socialLinks: {
-					...Object.entries(ymlconfigs.theme_settings?.social_links || {}).reduce((acc, [key, value]) => {
+					...Object.entries(ymlconfigs.theme_config?.social_links || {}).reduce((acc, [key, value]) => {
 						acc[key] = { link: value as string };
 						return acc;
 					}, {} as Record<string, { link: string }>),
 				},
 				nav: [
-					...Object.entries(ymlconfigs.theme_settings?.en?.nav || {}).map(([text, link]) => ({
+					...Object.entries(ymlconfigs.theme_config?.nav || {}).map(([text, link]) => ({
 						text: text,
 						link: link as string,
 					})),
 				],
 				sidebar: {
-					...(ymlconfigs.theme_settings?.en?.sidebar?.reduce((acc: any, sidebarItem: any) => {
+					...(ymlconfigs.theme_config?.sidebar?.reduce((acc: any, sidebarItem: any) => {
 						// Handle the sidebar structure from YAML (3-level structure)
 						const [title, sections] = Object.entries(sidebarItem)[0] as [string, any];
 						const sidebarSlug = `/${title.toLowerCase()}`;

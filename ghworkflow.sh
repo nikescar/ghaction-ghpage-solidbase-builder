@@ -43,7 +43,7 @@ npx vinxi build
 # echo "Copying 404.html to the public directory..."
 rm -rf ./.output/public/404.html*
 # get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
-export subsite_urls=$(yq eval '.404_subsite_urls[]' _config.yml | tr '\n' ',' | sed 's/,$//' | sed 's/,/, /g')
+subsite_urls=$(yq eval '.404_subsite_urls[]' _config.yml | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//')
 sed -i "s|_s=\[\];|_s=[$subsite_urls];|" ./_404.html
 cp _404.html ./.output/public/404.html
 

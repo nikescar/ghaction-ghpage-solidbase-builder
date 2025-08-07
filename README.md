@@ -1,8 +1,8 @@
-# Github Action Solidbase Builder
+# MDX Sitegen Solidbase
 
 A GitHub Action that converts your markdown documentation to a beautiful website using SolidJS and Solidbase for GitHub Pages and other hosting providers.
 
-## Quick Description
+## 1. Quick Description
 
 This project provides a complete solution for converting Markdown documentation into beautiful, responsive websites using:
 
@@ -12,7 +12,16 @@ This project provides a complete solution for converting Markdown documentation 
 - **GitHub Actions**: Automated deployment pipeline for GitHub Pages
 - **Multi-platform**: Support for various hosting providers (Deno, Firebase, DigitalOcean)
 
-## Prerequisites
+## 2. Key Features
+
+- 📝 **Markdown & MDX Support**: Write documentation in familiar formats
+- 🎨 **Beautiful Theming**: Responsive design with Solidbase theme system
+- ⚡ **Fast Performance**: SolidJS provides excellent runtime performance
+- 🔧 **Flexible Configuration**: Customizable via YAML configuration
+- 🚀 **Easy Deployment**: GitHub Actions integration for automated publishing
+- 🌐 **Multi-host Support**: Deploy to GitHub Pages, Deno, Firebase, DigitalOcean
+
+## 3. Prerequisites
 
 ```
 documentation_repo/
@@ -34,16 +43,11 @@ documentation_repo/
 │       └── favicon.ico
 ```
 
-## Key Features
+## 4. Deployment
 
-- 📝 **Markdown & MDX Support**: Write documentation in familiar formats
-- 🎨 **Beautiful Theming**: Responsive design with Solidbase theme system
-- ⚡ **Fast Performance**: SolidJS provides excellent runtime performance
-- 🔧 **Flexible Configuration**: Customizable via YAML configuration
-- 🚀 **Easy Deployment**: GitHub Actions integration for automated publishing
-- 🌐 **Multi-host Support**: Deploy to GitHub Pages, Deno, Firebase, DigitalOcean
+### 4-1. with Github Workflow
 
-## Github Workflow
+copy ./.github/workflows/vite.doc.yml file to your repository and edit.
 
 ```yaml
 # Add to .github/workflows/pages.yml
@@ -61,62 +65,30 @@ jobs:
           config-file: '_config.yml'
 ```
 
-### Inputs
+### 4-2. with Github Action
+
+in your workflow, add following snippet.
+
+```yaml
+
+```
+
+#### 4-1-1. Inputs
 
 - `config-file`: Path to configuration file (default: `_config.yml`)
-- `docs-dir`: Documentation directory (default: `docs/`)
-- `output-dir`: Build output directory (default: `.output/`)
 
-### Outputs
+#### 4-1-2. Outputs
 
 - `build-path`: Path to the generated static site
 - `deployment-url`: URL of the deployed site
 
-## Github Pages push from local
+### 4-3. with npm init
 
+on your local repository, run following command.
 ```bash
-npm install
-npm run build
-# Files generated in .output/public/ ready for GitHub Pages
+$ npm init mdx-sitegen-solidbase
 ```
 
-## Set Pages to Other Providers
-using nitro : https://nitro.build/config
+### 4-4. with jekyll-remote-theme
 
-### deploy to deno
-https://nitro.build/deploy/providers/deno-deploy
-
-```bash
-$ NITRO_PRESET=deno_deploy npm run build
-
-# Make sure to run the deployctl command from the output directory
-$ cd .output
-$ deployctl deploy --project=my-project server/index.ts
-```
-
-### deploy to firebase
-https://nitro.build/deploy/providers/firebase
-
-```bash
-$ npm install -g firebase-tools@latest
-$ firebase login
-$ firebase init hosting
-# edit firebase.json
-
-$ NITRO_PRESET=firebase npm run build
-$ firebase emulators:start
-$ NITRO_PRESET=firebase npm run build
-$ firebase deploy
-```
-
-### deploy to digital ocean
-https://nitro.build/deploy/providers/digitalocean
-
-```bash
-NITRO_PRESET=digital_ocean
-
-# add engines to package.json
-# add start cmd to package.json
-
-# run start on digitalocean
-```
+WIP.

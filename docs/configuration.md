@@ -1,11 +1,11 @@
 ---
 title: Configuration
-description: How to configure Jekyll Solidbase Theme
+description: How to configure mdx-sitegen-solidbase
 ---
 
 # Configuration
 
-Learn how to configure Jekyll Solidbase Theme for GitHub Workflow deployment.
+Learn how to configure mdx-sitegen-solidbase.
 
 ## Configuration File Structure
 
@@ -15,35 +15,61 @@ The main configuration is done in your `_config.yml` file in your repository roo
 # Site settings
 title: Your Site Title
 description: Your site description
-show_downloads: true
+issue_link: "https://github.com/yourusername/mdx-sitegen-solidbase/issues"
+edit_path: "https://github.com/yourusername/mdx-sitegen-solidbase/edit/main/:path"
+lang: en
+site_favicon: './resources/favicon.ico'
+site_author: Your Name
+repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
+
+# 404 page redirection rules - for github site repo, ex. {id}.github.io
+404_subsite_urls:
+  - /mdx-sitegen-solidbase/
+  # - /subpath/
+  # - /subpath2/
 
 # Content processing rules
 include:
-  - .well-known/
+  - .well-known
   - index.md
-  - docs/
-  - resources/
+  - docs
+  - resources
+  - README.md
+  - CREDITS.md
 
 exclude:
-  - _includes
-  - _layouts
   - .github
   - .output
   - .vinxi
   - node_modules
   - scripts
   - tmp
+  - _config.yml
+  - app.config.ts
+  - build.ts
+  - package.json
+  - package-lock.json
+  - pnpm-lock.yaml
+  - tsconfig.json
 
-# Site identity
-site_author: Your Name
-repo_url: 'https://github.com/yourusername/your-repo'
-site_url: 'https://yourusername.github.io/your-repo'
-site_favicon: './resources/favicon.ico'
-
-# Theme settings
+# Theme configuration
+theme_upstream: 'https://github.com/yourusername/mdx-sitegen-solidbase'
 theme_config:
   social_links:
-    GitHub: 'https://github.com/yourusername/your-repo'
+    gitHub: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+    discord: 'https://discord.gg'
+  nav:
+    Docs: /mdx-sitegen-solidbase/docs
+    Readme: /mdx-sitegen-solidbase/readme
+    Credits: /mdx-sitegen-solidbase/credits
+  sidebar:
+    - Docs:
+      - Guide:
+          "Getting Started": /getting-started
+          Features: /features
+          Configuration: /configuration
+          Deployment: /deployment
 ```
 
 ## Required Configuration
@@ -55,24 +81,42 @@ theme_config:
 title: Your Site Title
 description: Your site description
 
-# Required: URL configuration (no subpaths supported)
-site_url: 'https://yourusername.github.io/your-repo'
+# Required: URL configuration
+site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
+repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
 
 # Required: Content inclusion
 include:
   - index.md    # Your homepage
-  - docs/       # Documentation folder
+  - docs        # Documentation folder
 ```
 
-### Repository Settings
+### GitHub Integration
 
 ```yaml
 # GitHub repository information
-repo_url: 'https://github.com/yourusername/your-repo'
+repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
 site_author: Your Name
+
+# GitHub Pages integration
+issue_link: "https://github.com/yourusername/mdx-sitegen-solidbase/issues"
+edit_path: "https://github.com/yourusername/mdx-sitegen-solidbase/edit/main/:path"
 
 # Optional: Custom favicon
 site_favicon: './resources/favicon.ico'
+```
+
+### 404 Page Configuration
+
+Configure 404 page redirection for GitHub Pages:
+
+```yaml
+# 404 page redirection rules - for github site repo, ex. {id}.github.io
+404_subsite_urls:
+  - /mdx-sitegen-solidbase/
+  # Add additional subpaths if needed
+  # - /subpath/
+  # - /subpath2/
 ```
 
 ## Content Processing Rules
@@ -82,12 +126,12 @@ Specify which files and folders to include in your site:
 
 ```yaml
 include:
+  - .well-known        # Special files (.well-known directory)
   - index.md           # Homepage
-  - docs/              # Documentation
-  - blog/              # Blog posts
-  - resources/         # Images, assets
-  - .well-known/       # Special files
-  - custom-folder/     # Any custom content
+  - docs               # Documentation
+  - resources          # Images, assets
+  - README.md          # README file
+  - CREDITS.md         # Credits file
 ```
 
 ### Exclude Rules
@@ -96,13 +140,18 @@ Specify what to exclude from processing:
 ```yaml
 exclude:
   - .github            # GitHub workflow files
+  - .output            # Build output directory
+  - .vinxi             # Vinxi build cache
   - node_modules       # Dependencies
-  - src/               # Source code
-  - tmp/               # Temporary files
-  - _includes          # Jekyll internals
-  - _layouts           # Jekyll internals
-  - package.json       # Build files
-  - "*.log"            # Log files
+  - scripts            # Build scripts
+  - tmp                # Temporary files
+  - _config.yml        # Configuration file
+  - app.config.ts      # App configuration
+  - build.ts           # Build scripts
+  - package.json       # Package manifest
+  - package-lock.json  # Lock file
+  - pnpm-lock.yaml     # PNPM lock file
+  - tsconfig.json      # TypeScript config
 ```
 
 ## Homepage Configuration
@@ -122,7 +171,7 @@ hero:
       link: ./docs
     - theme: alt
       text: GitHub
-      link: https://github.com/yourusername/your-repo
+      link: https://github.com/yourusername/mdx-sitegen-solidbase
   image:
     src: https://your-domain.com/logo.png
 
@@ -141,6 +190,38 @@ features:
 Additional content for your homepage goes here.
 ```
 
+## Navigation and Sidebar Configuration
+
+### Navigation Menu
+
+Configure the main navigation menu:
+
+```yaml
+theme_config:
+  nav:
+    Docs: /mdx-sitegen-solidbase/docs
+    Readme: /mdx-sitegen-solidbase/readme
+    Credits: /mdx-sitegen-solidbase/credits
+    # Custom pages can be added:
+    # Blog: /blog
+    # Packages: /packages
+```
+
+### Sidebar Structure
+
+Configure the documentation sidebar:
+
+```yaml
+theme_config:
+  sidebar:
+    - Docs:
+      - Guide:
+          "Getting Started": /getting-started
+          Features: /features
+          Configuration: /configuration
+          Deployment: /deployment
+```
+
 ## Social Links
 
 Add social media links to your site:
@@ -148,11 +229,20 @@ Add social media links to your site:
 ```yaml
 theme_config:
   social_links:
-    GitHub: 'https://github.com/username'
-    Twitter: 'https://twitter.com/username'
-    LinkedIn: 'https://linkedin.com/in/username'
-    Discord: 'https://discord.gg/your-server'
-    YouTube: 'https://youtube.com/@username'
+    gitHub: 'https://github.com/username'
+    discord: 'https://discord.gg/your-server'
+    # Other social links can be added:
+    # twitter: 'https://twitter.com/username'
+    # linkedin: 'https://linkedin.com/in/username'
+```
+
+## Theme Upstream Configuration
+
+Configure the theme source repository:
+
+```yaml
+# Theme upstream repository
+theme_upstream: 'https://github.com/yourusername/mdx-sitegen-solidbase'
 ```
 
 ## Asset Management
@@ -179,24 +269,36 @@ include:
 ## Advanced Configuration
 
 ### URL Configuration
-**Important:** The theme only supports root domain URLs, not subpaths:
+**Important:** The theme supports both root domains and subpaths:
 
 ```yaml
-# ✅ Correct - root domain
+# ✅ Root domain
 site_url: 'https://yourusername.github.io'
-site_url: 'https://your-custom-domain.com'
 
-# ❌ Incorrect - subpaths not supported
-site_url: 'https://yourusername.github.io/subfolder'
+# ✅ With subpath (GitHub Pages repository)
+site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
+
+# ✅ Custom domain
+site_url: 'https://your-custom-domain.com'
+```
+
+### Language Configuration
+
+Set the site language:
+
+```yaml
+# Site language
+lang: en
 ```
 
 ### Build Optimization
-The GitHub workflow automatically handles:
+The build process automatically handles:
 - Installing npm dependencies
 - Building with Vinxi
 - Processing include/exclude rules
 - Copying assets and favicon
 - Generating optimized output
+- 404 page redirection setup
 
 ### Environment Variables
 You can use GitHub repository secrets for sensitive configuration:
@@ -212,46 +314,48 @@ analytics_id: ${ { secrets.GA_TRACKING_ID } }
 ```yaml
 include:
   - index.md
-  - docs/
-  - api/
-  - examples/
-  - resources/
+  - docs
+  - resources
+  - README.md
+  - CREDITS.md
 
 exclude:
   - .github
   - node_modules
-  - src/
+  - src
+  - tmp
 ```
 
 ### Blog Site
 ```yaml
 include:
   - index.md
-  - _posts/
+  - _posts
   - about.md
-  - assets/
+  - resources
 
 exclude:
   - .github
   - node_modules
-  - drafts/
+  - drafts
 ```
 
 ### Mixed Content Site
 ```yaml
 include:
   - index.md
-  - docs/
-  - blog/
-  - projects/
-  - resources/
-  - .well-known/
+  - docs
+  - blog
+  - projects
+  - resources
+  - .well-known
+  - README.md
 
 exclude:
   - .github
   - node_modules
-  - src/
-  - tmp/
+  - src
+  - tmp
   - "*.log"
 ```
 
@@ -262,10 +366,18 @@ exclude:
 1. **Content not appearing**: Check that files are in the `include:` list
 2. **Build errors**: Verify YAML syntax in `_config.yml`
 3. **Asset 404s**: Ensure assets are included and paths are correct
-4. **URL issues**: Confirm `site_url` is a root domain without subpaths
+4. **URL issues**: Confirm `site_url` format is correct
+5. **404 redirects not working**: Check `404_subsite_urls` configuration
+6. **Navigation issues**: Verify `theme_config.nav` paths match your site structure
 
 ### Validation
-You can validate your YAML configuration:
+You can validate your YAML configuration using our validation script:
+```bash
+# Run the built-in validation script
+node scripts/validate-yaml.js
+```
+
+Or use external tools:
 ```bash
 # Install yq for YAML validation
 pip install yq

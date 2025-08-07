@@ -9,146 +9,51 @@ Learn how to deploy your Jekyll Solidbase Theme site using GitHub Workflow.
 
 **Current Status:** This theme currently uses GitHub Workflow for deployment rather than traditional Jekyll processing. Jekyll integration is planned for future development.
 
-## GitHub Pages (Recommended)
+## Github Pages push from local
 
-The theme is designed to work seamlessly with GitHub Pages using GitHub Actions workflow:
-
-### Prerequisites
-
-1. A GitHub repository containing your documentation
-2. GitHub Pages enabled in repository settings
-3. Source set to "GitHub Actions"
-
-### Setup
-
-1. **Create the deployment workflow** at `.github/workflows/vite.docs.yml`:
-
-```yaml
-name: Deploy vite built sites to github pages
-on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
-
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${ { steps.deployment.outputs.page_url } }
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: clone solidbase theme github
-        run: |
-          git clone https://github.com/nikescar/ghaction-ghpage-solidbase-builder.git .solidbase --depth 1
-          pushd ./.solidbase
-          bash ghworkflow.sh
-          popd
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './.solidbase/.output/public'
-          
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+```bash
+npm install
+npm run build
+# Files generated in .output/public/ ready for GitHub Pages
 ```
 
-2. **Configure your site** with `_config.yml`:
+## Set Pages to Other Providers
+using nitro : https://nitro.build/config
 
-```yaml
-# Site settings
-title: Your Site Title
-description: Your site description
+### deploy to deno
+https://nitro.build/deploy/providers/deno-deploy
 
-# Include in processing
-include:
-  - index.md
-  - docs/
-  - resources/
+```bash
+$ NITRO_PRESET=deno_deploy npm run build
 
-# Exclude from processing  
-exclude:
-  - _includes
-  - _layouts
-  - .github
-  - node_modules
-
-# Theme settings
-site_author: Your Name
-repo_url: 'https://github.com/yourusername/your-repo'
-site_url: 'https://yourusername.github.io/your-repo'
-site_favicon: './resources/favicon.ico'
+# Make sure to run the deployctl command from the output directory
+$ cd .output
+$ deployctl deploy --project=my-project server/index.ts
 ```
 
-3. **Enable GitHub Pages**:
-   - Go to repository Settings → Pages
-   - Source: GitHub Actions
-   - Save
+### deploy to firebase
+https://nitro.build/deploy/providers/firebase
 
-4. **Deploy**: Push changes to the main branch and the workflow will automatically build and deploy your site.
+```bash
+$ npm install -g firebase-tools@latest
+$ firebase login
+$ firebase init hosting
+# edit firebase.json
 
-## How the Deployment Works
+$ NITRO_PRESET=firebase npm run build
+$ firebase emulators:start
+$ NITRO_PRESET=firebase npm run build
+$ firebase deploy
+```
 
-The GitHub workflow performs these steps:
+### deploy to digital ocean
+https://nitro.build/deploy/providers/digitalocean
 
-1. **Checkout** your repository content
-2. **Clone** the Jekyll Solidbase Theme to `.solidbase/` directory
-3. **Execute** the build script (`ghworkflow.sh`) which:
-   - Copies your content to the theme's source directory
-   - Processes include/exclude rules from `_config.yml`
-   - Installs npm dependencies
-   - Builds the SolidJS application with Vinxi
-   - Copies static assets and favicon
-4. **Upload** the built site to GitHub Pages
-5. **Deploy** to your GitHub Pages URL
+```bash
+NITRO_PRESET=digital_ocean
 
-## Build Process Details
+# add engines to package.json
+# add start cmd to package.json
 
-The `ghworkflow.sh` script handles:
-
-- **Content Integration**: Copies your markdown files and assets into the theme structure
-- **Configuration Processing**: Reads your `_config.yml` for include/exclude rules
-- **Asset Management**: Handles favicon, images, and other static resources
-- **SolidJS Build**: Compiles the modern web application
-- **Output Preparation**: Prepares the final static site for deployment
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Workflow fails**: Check that GitHub Pages is enabled and source is set to "GitHub Actions"
-2. **404 errors**: Ensure your `site_url` in `_config.yml` matches your GitHub Pages URL
-3. **Missing assets**: Check that files are included in the `include:` section of `_config.yml`
-4. **Build errors**: Verify that your markdown files have valid frontmatter
-
-### Checking Deployment Status
-
-1. Go to your repository's "Actions" tab
-2. Click on the latest workflow run
-3. Review the logs for any errors
-4. Check that the deployment step completed successfully
-
-## Future: Traditional Jekyll Support
-
-Traditional Jekyll theme usage with `remote_theme` is planned for future development. This will allow:
-
-- Standard Jekyll site generation
-- Local development with `bundle exec jekyll serve`
-- Compatibility with existing Jekyll hosting providers
-
-Currently, the theme focuses on providing a modern, fast documentation experience through the GitHub Workflow deployment method.
+# run start on digitalocean
+```

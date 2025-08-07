@@ -1,5 +1,5 @@
 {
-  "name": "ghaction-ghpage-solidbase-builder",
+  "name": "mdx-sitegen-solidbase",
   "private": true,
   "type": "module",
   "scripts": {

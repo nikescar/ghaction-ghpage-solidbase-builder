@@ -17,84 +17,11 @@ Welcome to Jekyll Solidbase Theme! This guide will help you get up and running q
 
 2. **Create the GitHub Workflow file** at `.github/workflows/vite.docs.yml`:
 
-```yaml
-name: Deploy vite built sites to github pages
-on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
-
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${ { steps.deployment.outputs.page_url } }
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: clone solidbase theme github
-        run: |
-          git clone https://github.com/nikescar/ghaction-ghpage-solidbase-builder.git .solidbase --depth 1
-          pushd ./.solidbase
-          bash ghworkflow.sh
-          popd
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './.solidbase/.output/public'
-          
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
+[.github/workflows/vite.docs.yml](../.github/workflows/vite.docs.yml)
 
 3. **Create your configuration file** `_config.yml` in your repository root:
 
-```yaml
-# Site settings
-title: Your Site Title
-description: Your site description
-show_downloads: true
-
-# Include in processing
-include:
-  - .well-known/
-  - index.md
-  - docs/
-
-# Exclude from processing
-exclude:
-  - _includes
-  - _layouts
-  - .github
-  - .output
-  - .vinxi
-  - node_modules
-
-# Theme settings
-site_author: Your Name
-repo_url: 'https://github.com/yourusername/your-repo'
-site_url: 'https://yourusername.github.io/your-repo'
-site_favicon: './resources/favicon.ico'
-
-theme_config:
-  social_links:
-    GitHub: 'https://github.com/yourusername/your-repo'
-```
+[_config.yml](../_config.yml)
 
 4. **Create your homepage** `index.md`:
 

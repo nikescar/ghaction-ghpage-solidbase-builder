@@ -1,10 +1,13 @@
 <script>
 _s=[];
-_s.some(_i => {
+const found = _s.some(_i => {
   const _t=window.location.pathname + "/";
   if (_t.startsWith(_i)){
     window.location.href=_i+"?_g="+window.location.pathname;
+    return true;
   }
-})
-window.location.href="/?_g="+window.location.pathname;
+});
+if (!found) {
+  window.location.href="/?_g="+window.location.pathname;
+}
 </script>

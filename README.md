@@ -72,7 +72,7 @@ in your github workflow, add following snippet.
 
 on your local repository, run following command.
 ```bash
-$ npm init mdx-sitegen-solidbase
+$ npx github:nikescar/mdx-sitegen-solidbase remotebuild
 ```
 
 ### 4-4. with jekyll-remote-theme

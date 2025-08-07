@@ -8,7 +8,7 @@
 rm -rf ./src/routes/*
 cp ../_config.yml ./
 
-# echo "Copying files from ../ to ./src/routes..."
+# 1. Copying files from ../ to ./src/routes...
 inclusion_list=$(yq eval '.include[]' _config.yml)
 exclusion_list=$(yq eval '.exclude[]' _config.yml)
 echo "Inclusion list: $inclusion_list"
@@ -28,6 +28,7 @@ done
 echo "Listing files in src/routes after include and exclude..."
 ls -al ./src/routes/
 
+# 2. npm install
 echo "Installing npm dependencies..."
 npm install
 
@@ -37,10 +38,10 @@ if [ -n "$site_url" ]; then
   echo "VITE_SITE_URL=$site_url" > .env
 fi
 
-# echo "Building the project..."
+# 3. Building the project...
 npx vinxi build
 
-# echo "Copying 404.html to the public directory..."
+# 4. Copying 404.html to the public directory...
 rm -rf ./.output/public/404.html*
 # get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
 subsite_urls=$(yq eval '.404_subsite_urls[]' _config.yml | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//')
@@ -53,7 +54,7 @@ if [ -n "$favicon_path" ]; then
   cp "${favicon_path}" ./.output/public/favicon.ico
 fi
 
-# copy resources to public
+# 5. Copy resources to public
 for item in $inclusion_list; do
   cp -r "../${item}" ./.output/public/
 done

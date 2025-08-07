@@ -1,4 +1,4 @@
-# configuration for vite.docs solidbase https://github.com/nikescar/jekyll-theme-solidbase
+# configuration for vite.docs solidbase https://github.com/nikescar/ghaction-ghpage-solidbase-builder
 # Site settings
 title: Jekyll Solidbase Theme
 description: Solidbase Theme to Jekyll to use with GitHub Pages.
@@ -6,8 +6,6 @@ show_downloads: true
 
 # Excluded items can be re-enabled by adding them to the `include:` list.
 exclude:
-  - _includes
-  - _layouts
   - .github
   - .output
   - .vinxi
@@ -15,11 +13,8 @@ exclude:
   - scripts
   - tmp
   - _config.yml
-  - _config.jekyll.yml
   - app.config.ts
   - build.ts
-  - Gemfile
-  - Gemfile.lock
   - package.json
   - package-lock.json
   - pnpm-lock.yaml
@@ -37,7 +32,7 @@ include:
 
 # Theme settings
 site_author: Woojae, Park
-repo_url: 'https://github.com/nikescar/jekyll-theme-solidbase'
+repo_url: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
 # site_url does not support subpaths, so it should be the root URL of your site.
 site_url: 'http://nikescar.github.io/ghaction-ghpage-solidbase-builder/'
 # edit_on_github: true
@@ -49,7 +44,7 @@ site_favicon: './resources/favicon.ico'
 
 theme_settings:
   social_links:
-    GitHub: 'https://github.com/nikescar/jekyll-theme-solidbase'
+    GitHub: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
   en:
     title: Jekyll Solidbase Theme
     lang: en

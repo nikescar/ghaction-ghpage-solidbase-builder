@@ -45,7 +45,7 @@ jobs:
 
       - name: clone solidbase theme github
         run: |
-          git clone https://github.com/nikescar/jekyll-theme-solidbase.git .solidbase --depth 1
+          git clone https://github.com/nikescar/ghaction-ghpage-solidbase-builder.git .solidbase --depth 1
           pushd ./.solidbase
           bash ghworkflow.sh
           popd

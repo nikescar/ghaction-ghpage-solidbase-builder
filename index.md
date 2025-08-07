@@ -1,18 +1,18 @@
 ---
-title: jekyll-theme-solidbase
+title: ghaction-ghpage-solidbase-builder
 titleTemplate: easy to deploy documents markdown to github pages.
 layout: home
 
 hero:
-  text: jekyll-remote-theme github pages generator with solidjs.
+  text: github action github pages generator with solidjs.
   actions:
     - text: Docs
       link: ./docs
     - theme: alt
       text: GitHub
-      link: https://github.com/nikescar/jekyll-theme-solidbase
+      link: https://github.com/nikescar/ghaction-ghpage-solidbase-builder
   image:
-    src: https://nikescar.github.io/jekyll-theme-solidbase/resources/logo.png
+    src: https://nikescar.github.io/ghaction-ghpage-solidbase-builder/resources/logo.png
 
 features:
   - 
@@ -27,4 +27,4 @@ features:
 
 ---
 
-jekyll-theme-solidbase is made with [solidbase](https://solidbase.dev/) and based on [solidbase-docs](https://github.com/kobaltedev/solidbase/tree/main/docs)
+ghaction-ghpage-solidbase-builder is made with [solidbase](https://solidbase.dev/) and based on [solidbase-docs](https://github.com/kobaltedev/solidbase/tree/main/docs)

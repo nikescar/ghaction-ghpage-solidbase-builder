@@ -273,3 +273,8 @@ pip install yq
 # Validate syntax
 yq eval . _config.yml
 ```
+
+[deployment](./deployment.mdx)
+[deployment](./deployment)
+[deployment](/deployment.mdx)
+[deployment](./deployment.mdx)

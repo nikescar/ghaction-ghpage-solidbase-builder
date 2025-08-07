@@ -1,5 +1,5 @@
 {
-  "name": "jekyll-theme-solidbase",
+  "name": "ghaction-ghpage-solidbase-builder",
   "private": true,
   "type": "module",
   "scripts": {

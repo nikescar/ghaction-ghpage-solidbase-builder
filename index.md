@@ -27,4 +27,4 @@ features:
 
 ---
 
-ghaction-ghpage-solidbase-builder is made with [solidbase](https://solidbase.dev/) and based on [solidbase-docs](https://github.com/kobaltedev/solidbase/tree/main/docs)
+mdx-sitegen-solidbase is made with [solidbase](https://solidbase.dev/) and based on [solidbase-docs](https://github.com/kobaltedev/solidbase/tree/main/docs)

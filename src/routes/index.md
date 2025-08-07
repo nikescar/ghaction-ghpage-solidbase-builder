@@ -1,5 +1,5 @@
 ---
-title: ghaction-ghpage-solidbase-builder
+title: mdx-sitegen-solidbase
 titleTemplate: easy to deploy documents markdown to github pages.
 layout: home
 
@@ -10,9 +10,9 @@ hero:
       link: ./docs
     - theme: alt
       text: GitHub
-      link: https://github.com/nikescar/ghaction-ghpage-solidbase-builder
+      link: https://github.com/nikescar/mdx-sitegen-solidbase
   image:
-    src: https://nikescar.github.io/ghaction-ghpage-solidbase-builder/resources/logo.png
+    src: https://nikescar.github.io/mdx-sitegen-solidbase/resources/logo.png
 
 features:
   - 
@@ -27,4 +27,4 @@ features:
 
 ---
 
-ghaction-ghpage-solidbase-builder is made with [solidbase](https://solidbase.dev/) and based on [solidbase-docs](https://github.com/kobaltedev/solidbase/tree/main/docs)
+mdx-sitegen-solidbase is made with [solidbase](https://solidbase.dev/) and based on [solidbase-docs](https://github.com/kobaltedev/solidbase/tree/main/docs)

@@ -1,18 +1,18 @@
-# configuration for vite.docs solidbase https://github.com/nikescar/ghaction-ghpage-solidbase-builder
+# configuration for vite.docs solidbase https://github.com/nikescar/mdx-sitegen-solidbase
 # Site settings
 title: Github Action Solidbase Builder
 description: Solidbase Theme for markdown documents to site converter for GitHub Pages.
-issue_link: "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/issues"
-edit_path: "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/edit/main/:path"
+issue_link: "https://github.com/nikescar/mdx-sitegen-solidbase/issues"
+edit_path: "https://github.com/nikescar/mdx-sitegen-solidbase/edit/main/:path"
 lang: en
 site_favicon: './resources/favicon.ico'
 site_author: Woojae, Park
-repo_url: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
-site_url: 'http://nikescar.github.io/ghaction-ghpage-solidbase-builder/'
+repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
+site_url: 'http://nikescar.github.io/mdx-sitegen-solidbase/'
 
 # 404 page redirection rules - for github site repo, ex. {id}.github.io
 404_subsite_urls:
-  - /ghaction-ghpage-solidbase-builder/
+  - /mdx-sitegen-solidbase/
   # - /subpath/
   # - /subpath2/
   # - /github non-site repo/
@@ -44,15 +44,15 @@ include:
   - CREDITS.md
 
 # Theme settings
-theme_upstream: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
+theme_upstream: 'https://github.com/nikescar/mdx-sitegen-solidbase'
 theme_config:
   social_links:
-    gitHub: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
+    gitHub: 'https://github.com/nikescar/mdx-sitegen-solidbase'
     discord: 'https://discord.gg'
   nav:
-    Docs: /ghaction-ghpage-solidbase-builder/docs
-    Readme: /ghaction-ghpage-solidbase-builder/readme
-    Credits: /ghaction-ghpage-solidbase-builder/credits
+    Docs: /mdx-sitegen-solidbase/docs
+    Readme: /mdx-sitegen-solidbase/readme
+    Credits: /mdx-sitegen-solidbase/credits
     # - Packages: /packages
     # - Blog: /blog
   sidebar:

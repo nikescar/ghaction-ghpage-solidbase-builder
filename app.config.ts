@@ -97,8 +97,8 @@ export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/r
 		{
 			title: ymlconfigs.title || "Github Action Solidbase Builder",
 			description: ymlconfigs.description || "Solidbase Theme for markdown documents to site converter for GitHub Pages.",
-			issueAutolink: ymlconfigs.issue_link || "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/issues",
-			editPath: ymlconfigs.edit_path || "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/edit/main/:path",
+			issueAutolink: ymlconfigs.issue_link || "https://github.com/nikescar/mdx-sitegen-solidbase/issues",
+			editPath: ymlconfigs.edit_path || "https://github.com/nikescar/mdx-sitegen-solidbase/edit/main/:path",
 			lang: ymlconfigs.lang || "en",
 			locales: ymlconfigs.locales || {},
 			themeConfig: {

@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: your-org/ghaction-ghpage-solidbase-builder@v1
+      - uses: your-org/mdx-sitegen-solidbase@v1
         with:
           config-file: '_config.yml'
 ```

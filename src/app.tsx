@@ -43,7 +43,7 @@ export default function App() {
   }
 
   return (
-    <Router root={SolidBaseRoot}>
+    <Router root={SolidBaseRoot} basename="/ghaction-ghpage-solidbase-builder">
       <ContentFilter>
         <FileRoutes />
       </ContentFilter>

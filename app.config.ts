@@ -95,7 +95,7 @@ export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/r
 			},
 		},
 		{
-			title: ymlconfigs.title || "Jekyll Solidbase Theme",
+			title: ymlconfigs.title || "Github Action Solidbase Builder",
 			lang: ymlconfigs.theme_settings?.en?.lang || "en",
 			themeConfig: {
 				socialLinks: {

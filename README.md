@@ -1,5 +1,5 @@
-# GH ACTION for GH PAGES with Solidbase
-build documentation webpage with gh action for gh pages.
+# Github Action Solidbase Builder
+convert your markdown documentation to website with github action for github pages and other providers.
 
 ## Prerequisites
 

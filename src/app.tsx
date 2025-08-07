@@ -42,8 +42,13 @@ export default function App() {
     }, true) // Use capture phase to catch events early
   }
 
+  // parse site_url from _config.yml and set as base for the router
+  const siteUrl = new URL(import.meta.env.VITE_SITE_URL || 'https://example.com')
+  const basePath = siteUrl.pathname.replace(/\/$/, '') // Remove trailing slash if present
+  const base = basePath || '/'
+
   return (
-    <Router root={SolidBaseRoot} base="/ghaction-ghpage-solidbase-builder">
+    <Router root={SolidBaseRoot} base={base}>
       <ContentFilter>
         <FileRoutes />
       </ContentFilter>

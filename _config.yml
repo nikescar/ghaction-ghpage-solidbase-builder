@@ -4,8 +4,11 @@ title: Github Action Solidbase Builder
 description: Solidbase Theme for markdown documents to site converter for GitHub Pages.
 issue_link: "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/issues"
 edit_path: "https://github.com/nikescar/ghaction-ghpage-solidbase-builder/edit/main/:path"
-show_downloads: true
 lang: en
+site_favicon: './resources/favicon.ico'
+site_author: Woojae, Park
+repo_url: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
+site_url: 'http://nikescar.github.io/ghaction-ghpage-solidbase-builder/'
 
 # 404 page redirection rules - for github site repo, ex. {id}.github.io
 404_subsite_urls:
@@ -41,17 +44,7 @@ include:
   - CREDITS.md
 
 # Theme settings
-site_author: Woojae, Park
-repo_url: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
-# site_url does not support subpaths, so it should be the root URL of your site.
-site_url: 'http://nikescar.github.io/ghaction-ghpage-solidbase-builder/'
-# edit_on_github: true
-# github_docs_folder: false
-# sticky_navigation: true
-# search_enabled: false
-# logo: 'https://your.url/image.png'
-site_favicon: './resources/favicon.ico'
-
+theme_upstream: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'
 theme_config:
   social_links:
     gitHub: 'https://github.com/nikescar/ghaction-ghpage-solidbase-builder'

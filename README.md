@@ -2,26 +2,7 @@
 
 A GitHub Action that converts your markdown documentation to a beautiful website using SolidJS and Solidbase for GitHub Pages and other hosting providers.
 
-## 1. Quick Description
-
-This project provides a complete solution for converting Markdown documentation into beautiful, responsive websites using:
-
-- **SolidJS**: Modern reactive framework for fast, efficient web applications
-- **Solidbase**: Documentation theme system specifically designed for technical content
-- **Vinxi**: Full-stack SolidJS framework with SSR/SSG capabilities
-- **GitHub Actions**: Automated deployment pipeline for GitHub Pages
-- **Multi-platform**: Support for various hosting providers (Deno, Firebase, DigitalOcean)
-
-## 2. Key Features
-
-- 📝 **Markdown & MDX Support**: Write documentation in familiar formats
-- 🎨 **Beautiful Theming**: Responsive design with Solidbase theme system
-- ⚡ **Fast Performance**: SolidJS provides excellent runtime performance
-- 🔧 **Flexible Configuration**: Customizable via YAML configuration
-- 🚀 **Easy Deployment**: GitHub Actions integration for automated publishing
-- 🌐 **Multi-host Support**: Deploy to GitHub Pages, Deno, Firebase, DigitalOcean
-
-## 3. Prerequisites
+## 1. Getting Started
 
 Make your documentation directory like below.
 
@@ -45,6 +26,23 @@ documentation_repo/
 │       └── favicon.ico
 ```
 
+edit [_config.yml](_config.yml) accordingly.
+
+```
+title: Your Site Title
+description: Your site description
+repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
+deployment:
+  provider: 'github'
+```
+
+and run to build and deploy website.
+
+```bash
+$ npx github:nikescar/mdx-sitegen-solidbase
+```
+
 ## 4. Deployment
 
 ### 4-1. with Github Workflow
@@ -65,16 +63,25 @@ in your github workflow, add following snippet.
 
 #### 4-1-2. Outputs
 
-- `build-path`: Path to the generated static site
-- `deployment-url`: URL of the deployed site
+no output. Built webpages are pushed to each depoly service like github pages, deno-deploy, firebase, digital-ocean.
 
-### 4-3. with npm init
+### 4-3. with npx
 
 on your local repository, run following command.
 ```bash
-$ npx github:nikescar/mdx-sitegen-solidbase remotebuild
+$ npx github:nikescar/mdx-sitegen-solidbase
 ```
+
+check .solidbase/.output/public directory for output files.
 
 ### 4-4. with jekyll-remote-theme
 
 WIP.
+
+
+## 5. More Link
+
+1. Learn MDX/MD Syntax from Solidbase Examples. [Solidbase Examples](https://solidbase.dev/guide). [Solidbase Sources](https://github.com/kobaltedev/solidbase/tree/main/docs/src/routes/guide).
+2. Similar mdx sitegen project. [Solid-UI mdx sitegen](https://github.com/nikescar/mdx-sitegen-solid-ui)
+3. General MDX Syntax. [MDXjs Docs](https://mdxjs.com/docs/what-is-mdx/)
+

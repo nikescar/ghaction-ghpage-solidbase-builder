@@ -63,6 +63,32 @@ theme_config:
           Configuration: /configuration
           Deployment: /deployment
 
+# gitHub pages deployment settings -> ghaction
+deployment:
+  provider: 'github'
+
+# deno deploy settings -> ghaction
+deployment:
+  provider: 'deno'
+  branch: 'gh-pages'
+  token: ${{ secrets.DENO_DEPLOY_TOKEN }}
+  script: 'scripts/deploy.ts'
+
+# firebase deploy settings
+deployment:
+  provider: 'firebase'
+  project: 'your-firebase-project-id'
+  token: ${{ secrets.FIREBASE_TOKEN }}
+  script: 'scripts/deploy-firebase.ts'
+
+# digitalocean deploy settings
+deployment:
+  provider: 'digitalocean'
+  token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+  script: 'scripts/deploy-digitalocean.ts' 
+  region: 'nyc3'
+  droplet_name: 'your-droplet-name'
+
 # locales:
 #   kr:
 #     label: 한국어

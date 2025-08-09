@@ -72,6 +72,11 @@ if (fs.existsSync(configPath)) {
 	console.warn("_config.yaml not found, using default configuration.");
 }
 
+let basePath = ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/";
+if (process.env.NODE_ENV === 'development') {
+	basePath = '/'
+}
+
 export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/reference/entrypoints/app-config
 	createWithSolidBase(defaultTheme)( // solid defineConfig docs.solidjs.com/solid-start/reference/config/define-config
 		{ // vinxi https://vinxi.vercel.app/api/app.html
@@ -80,7 +85,7 @@ export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/r
 				if (router === "server") {
 				} else if (router === "client") {
 					return {
-						base: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
+						base: basePath,
 						plugins: [OGPlugin() as any],
 					}
 				} else if (router === "server-function") {
@@ -88,7 +93,7 @@ export default defineConfig( // solidbase https://docs.solidjs.com/solid-start/r
 				return { plugins: [] };
 			},
 			server: { // nitro https://nitro.build/config
-				baseURL: ymlconfigs.site_url ? new URL(ymlconfigs.site_url).pathname.replace(/\/$/, "") : "/",
+				baseURL: basePath,
 				compatibilityDate: "2025-05-26",
 				preset: "github_pages",
 				// legacyExternals: true,

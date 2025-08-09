@@ -58,7 +58,7 @@ fi
 
 # echo "Cleaning routes folder in examples in theme routes..."
 rm -rf ./src/routes/*
-cp "${src_path}/_config.yml" ./
+cp -rp "${src_path}/_config.yml" ./
 
 # 1. Copying included files from ../ to ./src/routes...
 inclusion_list=$(${yq_bin_path} eval '.include[]' _config.yml)
@@ -67,10 +67,10 @@ echo "Inclusion list: $inclusion_list"
 echo "Exclusion list: $exclusion_list"
 
 mkdir -p ./src/routes
-cp "${src_path}/index.md" ./src/routes/index.md 2>&1 1>/dev/null
+cp -rp "${src_path}/index.md" ./src/routes/index.md 2>&1 1>/dev/null
 
 for item in $inclusion_list; do
-  cp -rf "${src_path}/${item}" ./src/routes/${item}
+  cp -rfp "${src_path}/${item}" ./src/routes/${item}
 done
 
 for item in $exclusion_list; do
@@ -103,12 +103,12 @@ cp _404.html ./.output/public/404.html
 favicon_path=$(${yq_bin_path} eval '.site_favicon' _config.yml)
 if [ -n "$favicon_path" ]; then
   # echo "Copying favicon from $favicon_path to ./.output/public/favicon.ico"
-  cp "${favicon_path}" ./.output/public/favicon.ico
+  cp -rp "${favicon_path}" ./.output/public/favicon.ico
 fi
 
 # 5. Copy resources to public
 for item in $inclusion_list; do
-  cp -r "${src_path}/${item}" ./.output/public/
+  cp -rp "${src_path}/${item}" ./.output/public/
 done
 
 for item in $exclusion_list; do
@@ -127,6 +127,7 @@ fi
 # 6. Deployment
 # if deployment provider is firebase, run firebase deploy
 deployment_provider=$(${yq_bin_path} eval '.deployment.provider' _config.yml)
+source .secrets
 if [ "$deployment_provider" == "firebase" ]; then
   echo "Deploying to Firebase..."
   firebase_service_account_key=$(${yq_bin_path} eval '.deployment.service_account_key_text' _config.yml)

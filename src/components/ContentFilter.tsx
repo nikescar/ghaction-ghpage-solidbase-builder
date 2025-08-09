@@ -33,6 +33,15 @@ export const ContentFilter: Component<ContentFilterProps> = (props) => {
           const cleanHref = href.replace('/src/routes', '')
           link.setAttribute('href', cleanHref)
         }
+
+        const siteUrl = new URL(import.meta.env.VITE_SITE_URL || 'https://example.com')
+        const basePath = siteUrl.pathname.replace(/\/$/, '') // Remove trailing slash if present
+        const base = basePath || '/'
+
+        // if link does not start with base path, prepend it
+        if (!href.startsWith(base) && isInternal) {
+          link.setAttribute('href', base + cleanUrl(href))
+        }
         
       }
     })

@@ -1,34 +1,34 @@
-name: 'Deploy GitHub Pages site'
-description: 'A GitHub Action to deploy an artifact as a GitHub Pages site'
+# USAGE
+# - name: Build with Solidbase Theme
+#   uses: ./.github/actions/solidbase-theme
+#   with:
+#     config_path: '_config.yml'
+#   env:
+#     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+name: 'Build with Solidbase Theme'
+description: 'A GitHub Action to download and build with Solidbase theme'
 author: 'GitHub'
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - name: Download and build with theme
+      shell: bash
+      run: |
+        export theme_upstream=$(grep -m1 'theme_upstream:' ${{ inputs.config_path }} | awk '{print $2}' | sed "s/'//g")/archive/refs/heads/main.tar.gz
+        wget -q "$theme_upstream" -O main.tar.gz
+        if [ $? -ne 0 ]; then
+            echo "Failed to download theme from $theme_upstream"
+            exit 1
+        fi
+        mkdir -p .solidbase
+        tar -xzf main.tar.gz --strip-components=1 -C .solidbase
+        pushd ./.solidbase
+        bash ghworkflow.sh
+        popd
 inputs:
-  token:
-    description: 'GitHub token'
-    default: ${{ github.token }}
-    required: true
-  timeout:
-    description: 'Time in milliseconds after which to timeout and cancel the deployment (default: 10 minutes)'
+  config_path:
+    description: 'Path to _config.yml file'
     required: false
-    default: '600000'
-  error_count:
-    description: 'Maximum number of status report errors before cancelling a deployment (default: 10)'
-    required: false
-    default: '10'
-  reporting_interval:
-    description: 'Time in milliseconds between two deployment status report (default: 5 seconds)'
-    required: false
-    default: '5000'
-  artifact_name:
-    description: 'Name of the artifact to deploy'
-    required: false
-    default: 'github-pages'
-  preview:
-    description: 'Is this attempting to deploy a pull request as a GitHub Pages preview site? (NOTE: This feature is only in alpha currently and is not available to the public!)'
-    required: false
-    default: 'false'
-outputs:
-  page_url:
-    description: 'URL to deployed GitHub Pages'
+    default: '_config.yml'
+

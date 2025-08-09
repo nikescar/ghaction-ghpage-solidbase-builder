@@ -19,15 +19,18 @@ site_url: 'http://nikescar.github.io/mdx-sitegen-solidbase/'
 
 # Excluded items can be re-enabled by adding them to the `include:` list.
 exclude:
+  - .secrets
   - .github
   - .output
   - .vinxi
+  - .solidbase
+  - .git
+  - .gitignore
   - node_modules
   - scripts
   - tmp
   - _config.yml
   - app.config.ts
-  - build.ts
   - package.json
   - package-lock.json
   - pnpm-lock.yaml
@@ -63,63 +66,28 @@ theme_config:
           Configuration: /configuration
           Deployment: /deployment
 
-# gitHub pages deployment settings -> ghaction
-deployment:
-  provider: 'github'
+# gitHub pages deployment(gh-pages.publish) settings # https://github.com/new
+# 1. Create a GitHub repository
+# 2. Enable GitHub Pages in the repository settings
+# 3. Generate a personal access token with "repo" and "workflow" scopes and save it as GITHUB_TOKEN secret in your GitHub repository
+deployment: # https://github.com/settings/personal-access-tokens
+  provider: 'github-page'
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  github_repo: 'nikescar/mdx-sitegen-solidbase'
 
-# deno deploy settings -> ghaction
-deployment:
-  provider: 'deno'
-  branch: 'gh-pages'
-  token: ${{ secrets.DENO_DEPLOY_TOKEN }}
-  script: 'scripts/deploy.ts'
+# deno deploy(deployctl) settings # https://dash.deno.com/new_project
+# 1. Create a Deno Deploy project
+# 2. Generate a Deno Deploy token and save it as DENO_DEPLOY_TOKEN secret in your GitHub repository
+# deployment: # https://dash.deno.com/account#access-tokens
+#   provider: 'deno-deploy'
+#   project: 'mdx-sitegen-solidbase'
+#   deno_deploy_token: ${{ secrets.DENO_DEPLOY_TOKEN }} 
 
-# firebase deploy settings
-deployment:
-  provider: 'firebase'
-  project: 'your-firebase-project-id'
-  token: ${{ secrets.FIREBASE_TOKEN }}
-  script: 'scripts/deploy-firebase.ts'
-
-# digitalocean deploy settings
-deployment:
-  provider: 'digitalocean'
-  token: ${{ secrets.DIGITALOCEAN_TOKEN }}
-  script: 'scripts/deploy-digitalocean.ts' 
-  region: 'nyc3'
-  droplet_name: 'your-droplet-name'
-
-# locales:
-#   kr:
-#     label: 한국어
-#     themeConfig:
-#       nav:
-#         -
-#           text: 가이드
-#           link: /guide
-#         -
-#           text: 참조
-#           link: /Reference
-#       sidebar:
-#         "/guide":
-#           -
-#             title: 가이드
-#             collapsed: false
-#             items:
-#               -
-#                 title: "시작하기"
-#                 link: "/getting-started"
-#               -
-#                 title: "기능목록"
-#                 link: "/features"
-#               -
-#                 title: "설정"
-#                 link: "/configuration"
-#               -
-#                 title: "배포"
-#                 link: "/deployment"
-#         "/reference":
-#           -
-#             title: 참조
-#             collapsed: false
-#             items:
+# firebase deploy(firebase) settings # https://console.firebase.google.com/u/0/
+# 1. Create a Firebase project
+# 2. Create a service account with the "Firebase Admin SDK" role
+# 3. Generate a private json key for the service account and save it as FIREBASE_SERVICE_ACCOUNT_KEY secret in your GitHub repository
+# deployment: # https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?authuser=0&supportedpurview=project
+#   provider: 'firebase'
+#   project: 'mdx-sitegen-solidbase'
+#   service_account_key_text: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}

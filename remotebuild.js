@@ -31,7 +31,7 @@ async function remotebuild() {
     console.log('Starting remote build process...');
     
     // Execute the full command chain
-    await execCommand('git clone https://github.com/nikescar/mdx-sitegen-solidbase .solidbase --depth 1 && cd .solidbase && bash ghworkflow.sh');
+    await execCommand('git clone https://github.com/nikescar/mdx-sitegen-solidbase .solidbase --depth 1 && cd .solidbase && bash ghworkflow.sh --no-deploy --src-path ../');
     
     console.log('Remote build completed successfully!');
   } catch (error) {

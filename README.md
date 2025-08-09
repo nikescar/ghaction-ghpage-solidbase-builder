@@ -45,38 +45,69 @@ $ npx github:nikescar/mdx-sitegen-solidbase
 
 ## 4. Deployment
 
-### 4-1. with Github Workflow
+### 4-1. Github Repository with Github Workflow to Github Pages
+
+This type does not require deployment: section on your _config.yml. only supports to github pages deployment.
 
 Copy [.github/workflows/vite.doc.yml](.github/workflows/vite.doc.yml) file to your repository.
 
-### 4-2. with Github Action
+* github pages served with static server, which doesn't route SPA application like solidjs. luckily, github 404 page intact url of wrong page url. we could make redirection for 404 rules to connect with SPA router. [more info](./_404.html)
 
-in your github workflow, add following snippet.
+### 4-2. Github Repository with Github Action to Github Pages
+
+In your github workflow, add following snippet.
 
 ```yaml
-
+- name: Build with Solidbase Theme
+  uses: ./.github/actions/solidbase-theme
+  with:
+    config_path: '_config.yml'
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-#### 4-1-1. Inputs
+#### 4-2-1. Inputs
 
 - `config-file`: Path to configuration file (default: `_config.yml`)
 
-#### 4-1-2. Outputs
+#### 4-2-2. Outputs
 
-no output. Built webpages are pushed to each depoly service like github pages, deno-deploy, firebase, digital-ocean.
+No output. Built webpages are pushed to each depoly service like github pages, deno-deploy, firebase.
 
-### 4-3. with npx
-
-on your local repository, run following command.
-```bash
-$ npx github:nikescar/mdx-sitegen-solidbase
-```
-
-check .solidbase/.output/public directory for output files.
-
-### 4-4. with jekyll-remote-theme
+### 4-3. Github Repository with jekyll-remote-theme
 
 WIP.
+
+### 4-4. Local with local deploy
+
+On your local repository, run following command. use bash shell.
+```bash
+$ npx --yes github:nikescar/mdx-sitegen-solidbase
+```
+
+Check .solidbase/.output/public directory for output files.
+
+### 4-5. Local to Github Pages
+
+```yaml
+deployment: # https://github.com/settings/personal-access-tokens
+  provider: 'github-page'
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  github_repo: 'nikescar/mdx-sitegen-solidbase'
+```
+
+```bash
+#.secrets
+GITHUB_TOKEN=
+# DENO_DEPLOY_TOKEN=
+# FIREBASE_SERVICE_ACCOUNT_KEY=
+```
+
+### 4-6. Local to Firebase
+
+
+### 4-7. Local to Deno Deploy
+
 
 
 ## 5. More Link

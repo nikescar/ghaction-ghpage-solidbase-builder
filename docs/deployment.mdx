@@ -1,0 +1,48 @@
+---
+title: Deployment
+description: How to deploy your Jekyll Solidbase Theme site
+---
+
+# Deployment
+
+Learn how to deploy your Jekyll Solidbase Theme site using GitHub Workflow.
+
+**Current Status:** This theme currently uses GitHub Workflow for deployment rather than traditional Jekyll processing. Jekyll integration is planned for future development.
+
+## Github Pages push from local
+
+```bash
+npm install
+npm run build
+# Files generated in .output/public/ ready for GitHub Pages
+```
+
+## Set Pages to Other Providers
+using nitro : https://nitro.build/config
+
+### deploy to deno
+https://nitro.build/deploy/providers/deno-deploy
+
+```bash
+$ NITRO_PRESET=deno_deploy npm run build
+
+# Make sure to run the deployctl command from the output directory
+$ cd .output
+$ deployctl deploy --project=my-project server/index.ts
+```
+
+### deploy to firebase
+https://nitro.build/deploy/providers/firebase
+
+```bash
+$ npm install -g firebase-tools@latest
+$ firebase login
+$ firebase init hosting
+# edit firebase.json
+
+$ NITRO_PRESET=firebase npm run build
+$ firebase emulators:start
+$ NITRO_PRESET=firebase npm run build
+$ firebase deploy
+```
+

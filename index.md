@@ -7,7 +7,7 @@ hero:
   text: github action github pages generator with solidjs.
   actions:
     - text: Docs
-      link: ./docs
+      link: /docs
     - theme: alt
       text: GitHub
       link: https://github.com/nikescar/mdx-sitegen-solidbase

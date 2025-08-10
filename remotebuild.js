@@ -2,6 +2,8 @@
 
 import { spawn } from 'child_process';
 import { promisify } from 'util';
+import fs from 'fs';
+import path from 'path';
 
 // Show that the script is starting
 console.log('🔧 MDX SiteGen SolidBase Remote Build Tool');
@@ -42,8 +44,14 @@ async function remotebuild() {
     
     // Step 1: Clone the repository
     console.log('\n📥 Step 1: Cloning solidbase repository...');
-    await execCommand('git clone https://github.com/nikescar/mdx-sitegen-solidbase .solidbase --depth 1');
-    console.log('✅ Repository cloned successfully');
+    const solidbaseDir = path.join(process.cwd(), '.solidbase');
+    
+    if (fs.existsSync(solidbaseDir)) {
+      console.log('📁 .solidbase directory already exists. Skip Cloning...');
+    }else {
+      await execCommand('git clone https://github.com/nikescar/mdx-sitegen-solidbase .solidbase --depth 1');
+      console.log('✅ Repository cloned successfully');
+    }
     
     // Step 2: Run the build workflow
     console.log('\n🔧 Step 2: Running build workflow...');

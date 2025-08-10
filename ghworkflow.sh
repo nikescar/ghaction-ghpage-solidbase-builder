@@ -110,14 +110,11 @@ done
 
 ls -alth ./.output/public
 
+
 # if run with --no-deploy, skip deployment
 if [[ ${no_deploy} != 0 ]]; then
-  if [[ "${src_path}" == "../" ]]; then
-    echo "Continuing without deployment (--no-deploy flag is set but src-path is '../')."
-  else
-    echo "Skipping deployment as --no-deploy flag is set."
-    exit 0
-  fi
+  echo "Skipping deployment as --no-deploy flag is set."
+  exit 0
 fi
 
 # 6. Deployment

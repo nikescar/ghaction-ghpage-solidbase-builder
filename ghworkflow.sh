@@ -93,13 +93,6 @@ fi
 # 3. Building the project...
 npx vinxi build
 
-# 4. Copying 404.html to the public directory...
-rm -rf ./.output/public/404.html*
-# get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
-subsite_urls=$(${yq_bin_path} eval '.404_subsite_urls[]' _config.yml | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//')
-sed -i "s|_s=\[\];|_s=[$subsite_urls];|" ./_404.html
-cp _404.html ./.output/public/404.html
-
 favicon_path=$(${yq_bin_path} eval '.site_favicon' _config.yml)
 if [ -n "$favicon_path" ]; then
   # echo "Copying favicon from $favicon_path to ./.output/public/favicon.ico"
@@ -199,6 +192,14 @@ EOF
 #   npx deno deploy --project mdx-sitegen-solidbase --token "$deno_deploy_token" --config ./deno.json
 elif [ "$deployment_provider" == "github-page" ]; then
   echo "Deploying to GitHub Pages..."
+  
+  # 404 redirection. Copying 404.html to the public directory...
+  rm -rf ./.output/public/404.html*
+  # get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
+  subsite_urls=$(${yq_bin_path} eval '.404_subsite_urls[]' _config.yml | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//')
+  sed -i "s|_s=\[\];|_s=[$subsite_urls];|" ./_404.html
+  cp _404.html ./.output/public/404.html
+
   # get github_token from .secrets and get github_token and github_repo from _config.yml
   # and replace github_token from _config.yml with the value from .secrets
   github_token=$(${yq_bin_path} eval '.deployment.github_token' _config.yml)

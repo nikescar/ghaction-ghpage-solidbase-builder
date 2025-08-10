@@ -8,7 +8,7 @@ lang: en
 site_favicon: './resources/favicon.ico'
 site_author: Woojae, Park
 repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
-site_url: 'https://nikescar.github.io/mdx-sitegen-solidbase/'
+site_url: 'https://mdx-sitegen-solidbase.pages.dev/'
 
 # 404 page redirection rules - for github site repo, ex. {id}.github.io
 404_subsite_urls:
@@ -53,9 +53,9 @@ theme_config:
     gitHub: 'https://github.com/nikescar/mdx-sitegen-solidbase'
     discord: 'https://discord.gg'
   nav:
-    Docs: /mdx-sitegen-solidbase/docs
-    Readme: /mdx-sitegen-solidbase/readme
-    Credits: /mdx-sitegen-solidbase/credits
+    Docs: /docs
+    Readme: /readme
+    Credits: /credits
     # - Packages: /packages
     # - Blog: /blog
   sidebar:

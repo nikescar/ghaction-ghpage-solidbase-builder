@@ -35,7 +35,7 @@ hero:
   text: Your site description
   actions:
     - text: Docs
-      link: ./docs
+      link: /docs
     - theme: alt
       text: GitHub
       link: https://github.com/yourusername/your-repo

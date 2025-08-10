@@ -168,7 +168,7 @@ hero:
   text: Your main description
   actions:
     - text: Documentation
-      link: ./docs
+      link: /docs
     - theme: alt
       text: GitHub
       link: https://github.com/yourusername/mdx-sitegen-solidbase

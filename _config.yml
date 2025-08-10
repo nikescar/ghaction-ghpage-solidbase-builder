@@ -8,7 +8,7 @@ lang: en
 site_favicon: './resources/favicon.ico'
 site_author: Woojae, Park
 repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
-site_url: 'https://mdx-sitegen-solidbase.web.app'
+site_url: 'https://nikescar.github.io/mdx-sitegen-solidbase/'
 
 # 404 page redirection rules - for github site repo, ex. {id}.github.io
 404_subsite_urls:
@@ -70,10 +70,10 @@ theme_config:
 # 1. Create a GitHub repository
 # 2. Enable GitHub Pages in the repository settings
 # 3. Generate a personal access token with "repo" and "workflow" scopes and save it as GITHUB_TOKEN secret in your GitHub repository
-# deployment: # https://github.com/settings/personal-access-tokens
-#   provider: 'github-page'
-#   github_token: ${{ secrets.GITHUB_TOKEN }}
-#   github_repo: 'nikescar/mdx-sitegen-solidbase'
+deployment: # https://github.com/settings/personal-access-tokens
+  provider: 'github-page'
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  github_repo: 'nikescar/mdx-sitegen-solidbase'
 
 # firebase deploy(firebase) settings # https://console.firebase.google.com/u/0/
 # 1. Create a Firebase project

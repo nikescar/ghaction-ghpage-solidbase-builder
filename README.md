@@ -83,6 +83,8 @@ WIP.
 On your local repository, run following command. use bash shell.
 ```bash
 $ npx --yes github:nikescar/mdx-sitegen-solidbase
+# or if you already have .solidbase
+$ cd .solidbase && bash ghworkflow.sh --src-path ..
 ```
 
 To run webserver with static page.

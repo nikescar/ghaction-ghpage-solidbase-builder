@@ -49,7 +49,8 @@ if ! command -v yq &> /dev/null; then
     mv yq_darwin_amd64 yq
     yq_bin_path="./yq"
   elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
-    wget -qO- https://github.com/mikefarah/yq/releases/latest/download/yq_windows_amd64.zip
+    # curl to download https://github.com/mikefarah/yq/releases/latest/download/yq_windows_amd64.zip
+    curl -L -o yq_windows_amd64.zip https://github.com/mikefarah/yq/releases/latest/download/yq_windows_amd64.zip
     unzip yq_windows_amd64.zip
     mv yq_windows_amd64.exe yq.exe
     yq_bin_path="./yq.exe"
@@ -82,7 +83,11 @@ ls -al ./src/routes/
 
 # 2. npm install
 echo "Installing npm dependencies..."
-npm install
+if [[ ! -d "node_modules" ]] || [[ ! -f "package-lock.json" ]]; then
+  npm install
+else
+  echo "Dependencies already installed, skipping npm install..."
+fi
 
 # get site_url from _config.yml and echo to .env
 site_url=$(${yq_bin_path} eval '.site_url' _config.yml)
@@ -135,9 +140,7 @@ if [ -z "$CLOUDFLARE_PAGES_TOKEN" ] && [ -z "$GITHUB_TOKEN" ] && [ -z "$FIREBASE
     exit 1
   fi
 fi
-echo "CLOUDFLARE_PAGES_TOKEN: $CLOUDFLARE_PAGES_TOKEN"
-echo "GITHUB_TOKEN: $GITHUB_TOKEN"
-echo "FIREBASE_SERVICE_ACCOUNT_KEY: $FIREBASE_SERVICE_ACCOUNT_KEY"
+
 if [ "$deployment_provider" == "firebase" ]; then
   # get FIREBASE_SERVICE_ACCOUNT_KEY from .secrets and get project and service_account_key_text from _config.yml
   # and replace FIREBASE_SERVICE_ACCOUNT_KEY from _config.yml with the value from .secrets

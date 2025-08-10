@@ -129,28 +129,74 @@ fi
 deployment_provider=$(${yq_bin_path} eval '.deployment.provider' _config.yml)
 source .secrets
 if [ "$deployment_provider" == "firebase" ]; then
-  echo "Deploying to Firebase..."
+  # get FIREBASE_SERVICE_ACCOUNT_KEY from .secrets and get project and service_account_key_text from _config.yml
+  # and replace FIREBASE_SERVICE_ACCOUNT_KEY from _config.yml with the value from .secrets
+  firebase_project=$(${yq_bin_path} eval '.deployment.project' _config.yml)
   firebase_service_account_key=$(${yq_bin_path} eval '.deployment.service_account_key_text' _config.yml)
+  if [ -z "$firebase_project" ]; then
+    echo "Firebase project is not set. Please set it in _config.yml."
+    exit 1
+  fi
   if [ -z "$firebase_service_account_key" ]; then
     echo "Firebase service account key is not set. Please set it in _config.yml."
     exit 1
   fi
-  echo "$firebase_service_account_key" | base64 --decode > ./firebase-service-account.json
-  firebase deploy --only hosting --project mdx-sitegen-solidbase --token "$(cat ./firebase-service-account.json | jq -r '.token')" --config ./firebase.json
-  rm ./firebase-service-account.json
-elif [ "$deployment_provider" == "deno-deploy" ]; then
-  echo "Deploying to Deno Deploy..."
-  deno_deploy_token=$(${yq_bin_path} eval '.deployment.deno_deploy_token' _config.yml)
-  if [ -z "$deno_deploy_token" ]; then
-    echo "Deno Deploy token is not set. Please set it in _config.yml."
+  if [ -z "$FIREBASE_SERVICE_ACCOUNT_KEY" ]; then
+    echo "FIREBASE_SERVICE_ACCOUNT_KEY is not set. Please set it in .secrets."
     exit 1
   fi
-  # check if deno is installed, if not, install it
-  if ! command -v deno &> /dev/null; then
-    echo "Deno could not be found, installing..."
-    npx --yes deno install -gArf jsr:@deno/deployctl
+  echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 --decode > ./firebase-service-account_temp.json
+  if ! command -v firebase &> /dev/null; then
+    echo "Firebase CLI could not be found, installing..."
+    npm install firebase-tools --save-dev
   fi
-  npx deno deploy --project mdx-sitegen-solidbase --token "$deno_deploy_token" --config ./deno.json
+
+  cat > firebase.json << 'EOF'
+{
+  "hosting": {
+    "site": "__SITE_NAME__",
+    "cleanUrls": true,
+    "public": ".output/public",
+    "ignore": [
+      "**/.*"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=3600"
+          }
+        ]
+      }
+    ]
+  }
+}
+EOF
+  sed -i "s/__SITE_NAME__/${firebase_project}/g" firebase.json
+  export GOOGLE_APPLICATION_CREDENTIALS="./firebase-service-account_temp.json"
+  npx firebase deploy --only hosting --project "$firebase_project"
+  rm ./firebase-service-account_temp.json
+# elif [ "$deployment_provider" == "deno-deploy" ]; then
+#   echo "Deploying to Deno Deploy..."
+#   deno_deploy_token=$(${yq_bin_path} eval '.deployment.deno_deploy_token' _config.yml)
+#   if [ -z "$deno_deploy_token" ]; then
+#     echo "Deno Deploy token is not set. Please set it in _config.yml."
+#     exit 1
+#   fi
+#   # check if deno is installed, if not, install it
+#   if ! command -v deno &> /dev/null; then
+#     echo "Deno could not be found, installing..."
+#     npx --yes deno install -gArf jsr:@deno/deployctl
+#   fi
+#   npx deno deploy --project mdx-sitegen-solidbase --token "$deno_deploy_token" --config ./deno.json
 elif [ "$deployment_provider" == "github-page" ]; then
   echo "Deploying to GitHub Pages..."
   # get github_token from .secrets and get github_token and github_repo from _config.yml
@@ -176,6 +222,30 @@ elif [ "$deployment_provider" == "github-page" ]; then
   fi
   echo "Deploying to GitHub Pages... https://${github_token}@github.com/${github_repo}.git"
   npx gh-pages -d ./.output/public -r "https://${github_token}@github.com/${github_repo}.git" --branch gh-pages
+
+elif [ "$deployment_provider" == "cloudflare-pages" ]; then
+  echo "Deploying to Cloudflare Pages..."
+  cloudflare_pages_token=$(${yq_bin_path} eval '.deployment.cloudflare_pages_token' _config.yml)
+  if [ -z "$cloudflare_pages_token" ]; then
+    echo "Cloudflare Pages token is not set. Please set it in _config.yml."
+    exit 1
+  fi
+  cloudflare_project=$(${yq_bin_path} eval '.deployment.project' _config.yml)
+  if [ -z "$cloudflare_project" ]; then
+    echo "Cloudflare Pages project is not set. Please set it in _config.yml."
+    exit 1
+  fi
+  if [ -n "$CLOUDFLARE_PAGES_TOKEN" ]; then
+    echo "Using CLOUDFLARE_PAGES_TOKEN from environment variable."
+    cloudflare_pages_token=$CLOUDFLARE_PAGES_TOKEN
+  fi
+
+  if ! command -v wrangler &> /dev/null; then
+    echo "Wrangler could not be found, installing..."
+    npm install wrangler --save-dev
+  fi
+  export CLOUDFLARE_API_TOKEN="$cloudflare_pages_token"
+  npx wrangler pages deploy ./.output/public --project-name "$cloudflare_project"
 else
   echo "Unknown deployment provider: $deployment_provider"
   exit 1

@@ -69,3 +69,7 @@ package-lock.json
 
 .secrets
 src/routes/*
+
+deno.jsonc
+.firebase/
+firebase.json

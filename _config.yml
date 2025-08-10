@@ -8,7 +8,7 @@ lang: en
 site_favicon: './resources/favicon.ico'
 site_author: Woojae, Park
 repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
-site_url: 'http://nikescar.github.io/mdx-sitegen-solidbase/'
+site_url: 'https://mdx-sitegen-solidbase.web.app'
 
 # 404 page redirection rules - for github site repo, ex. {id}.github.io
 404_subsite_urls:
@@ -70,18 +70,10 @@ theme_config:
 # 1. Create a GitHub repository
 # 2. Enable GitHub Pages in the repository settings
 # 3. Generate a personal access token with "repo" and "workflow" scopes and save it as GITHUB_TOKEN secret in your GitHub repository
-deployment: # https://github.com/settings/personal-access-tokens
-  provider: 'github-page'
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  github_repo: 'nikescar/mdx-sitegen-solidbase'
-
-# deno deploy(deployctl) settings # https://dash.deno.com/new_project
-# 1. Create a Deno Deploy project
-# 2. Generate a Deno Deploy token and save it as DENO_DEPLOY_TOKEN secret in your GitHub repository
-# deployment: # https://dash.deno.com/account#access-tokens
-#   provider: 'deno-deploy'
-#   project: 'mdx-sitegen-solidbase'
-#   deno_deploy_token: ${{ secrets.DENO_DEPLOY_TOKEN }} 
+# deployment: # https://github.com/settings/personal-access-tokens
+#   provider: 'github-page'
+#   github_token: ${{ secrets.GITHUB_TOKEN }}
+#   github_repo: 'nikescar/mdx-sitegen-solidbase'
 
 # firebase deploy(firebase) settings # https://console.firebase.google.com/u/0/
 # 1. Create a Firebase project
@@ -91,3 +83,13 @@ deployment: # https://github.com/settings/personal-access-tokens
 #   provider: 'firebase'
 #   project: 'mdx-sitegen-solidbase'
 #   service_account_key_text: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+
+# cloudflare pages deployment settings # https://dash.cloudflare.com/
+# 1. Create a Cloudflare Pages project(Computing > Pages > Direct Upload *pass submision by uploading the zip file provided on the page.)
+# 2. Generate a Cloudflare Pages token and save it as CLOUDFLARE_PAGES_TOKEN secret in your GitHub repository
+# deployment: # https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/#generate-an-api-token
+#   provider: 'cloudflare-pages'
+#   project: 'mdx-sitegen-solidbase'
+#   cloudflare_pages_token: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+
+

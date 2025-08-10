@@ -13,15 +13,66 @@ The main configuration is done in your `_config.yml` file in your repository roo
 
 ```yaml
 # Site settings
-title: Your Site Title
-description: Your site description
-issue_link: "https://github.com/yourusername/mdx-sitegen-solidbase/issues"
-edit_path: "https://github.com/yourusername/mdx-sitegen-solidbase/edit/main/:path"
+title: Github Action Solidbase ### Environment Variables
+You can use GitHub repository secrets for sensitive configuration:
+
+```yaml
+# In your _config.yml, reference environment variables
+analytics_id: ${{ secrets.GA_TRACKING_ID }}
+```
+
+## Deployment Configuration
+
+The theme supports multiple deployment providers. Configure your preferred deployment method in the `deployment` section:
+
+### GitHub Pages
+```yaml
+deployment:
+  provider: 'github'
+  # No additional configuration needed for GitHub Pages
+```
+
+### Firebase Hosting
+```yaml
+# firebase deploy(firebase) settings # https://console.firebase.google.com/
+# 1. Create a Firebase project
+# 2. Create a service account with the "Firebase Admin SDK" role
+# 3. Generate a private json key for the service account and save it as FIREBASE_SERVICE_ACCOUNT_KEY secret
+deployment:
+  provider: 'firebase'
+  project: 'your-firebase-project-id'
+  service_account_key_text: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+```
+
+### Cloudflare Pages
+```yaml
+# cloudflare pages deployment settings # https://dash.cloudflare.com/
+# 1. Create a Cloudflare Pages project (Computing > Pages > Direct Upload)
+# 2. Generate a Cloudflare Pages token and save it as CLOUDFLARE_PAGES_TOKEN secret
+deployment:
+  provider: 'cloudflare-pages'
+  project: 'your-project-name'
+  cloudflare_pages_token: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+```
+
+### Local Development
+For local development and testing:
+```bash
+# Build locally
+npm install
+npm run build
+
+# Serve locally
+cd .output/public && npx serve
+```
+description: Solidbase Theme for markdown documents to site converter for GitHub Pages.
+issue_link: "https://github.com/nikescar/mdx-sitegen-solidbase/issues"
+edit_path: "https://github.com/nikescar/mdx-sitegen-solidbase/edit/main/:path"
 lang: en
 site_favicon: './resources/favicon.ico'
-site_author: Your Name
-repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
-site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
+site_author: Woojae, Park
+repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
+site_url: 'https://mdx-sitegen-solidbase.pages.dev/'
 
 # 404 page redirection rules - for github site repo, ex. {id}.github.io
 404_subsite_urls:
@@ -39,30 +90,33 @@ include:
   - CREDITS.md
 
 exclude:
+  - .secrets
   - .github
   - .output
   - .vinxi
+  - .solidbase
+  - .git
+  - .gitignore
   - node_modules
   - scripts
   - tmp
   - _config.yml
   - app.config.ts
-  - build.ts
   - package.json
   - package-lock.json
   - pnpm-lock.yaml
   - tsconfig.json
 
 # Theme configuration
-theme_upstream: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+theme_upstream: 'https://github.com/nikescar/mdx-sitegen-solidbase'
 theme_config:
   social_links:
-    gitHub: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+    gitHub: 'https://github.com/nikescar/mdx-sitegen-solidbase'
     discord: 'https://discord.gg'
   nav:
-    Docs: /mdx-sitegen-solidbase/docs
-    Readme: /mdx-sitegen-solidbase/readme
-    Credits: /mdx-sitegen-solidbase/credits
+    Docs: /docs
+    Readme: /readme
+    Credits: /credits
   sidebar:
     - Docs:
       - Guide:
@@ -70,6 +124,12 @@ theme_config:
           Features: /features
           Configuration: /configuration
           Deployment: /deployment
+
+# Deployment configuration (multiple providers supported)
+deployment:
+  provider: 'cloudflare-pages'
+  project: 'mdx-sitegen-solidbase'
+  cloudflare_pages_token: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
 ```
 
 ## Required Configuration
@@ -78,12 +138,12 @@ theme_config:
 
 ```yaml
 # Required: Site identity
-title: Your Site Title
-description: Your site description
+title: Github Action Solidbase Builder
+description: Solidbase Theme for markdown documents to site converter
 
 # Required: URL configuration
-site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
-repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+site_url: 'https://mdx-sitegen-solidbase.pages.dev/'
+repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
 
 # Required: Content inclusion
 include:
@@ -95,12 +155,12 @@ include:
 
 ```yaml
 # GitHub repository information
-repo_url: 'https://github.com/yourusername/mdx-sitegen-solidbase'
-site_author: Your Name
+repo_url: 'https://github.com/nikescar/mdx-sitegen-solidbase'
+site_author: Woojae, Park
 
 # GitHub Pages integration
-issue_link: "https://github.com/yourusername/mdx-sitegen-solidbase/issues"
-edit_path: "https://github.com/yourusername/mdx-sitegen-solidbase/edit/main/:path"
+issue_link: "https://github.com/nikescar/mdx-sitegen-solidbase/issues"
+edit_path: "https://github.com/nikescar/mdx-sitegen-solidbase/edit/main/:path"
 
 # Optional: Custom favicon
 site_favicon: './resources/favicon.ico'
@@ -139,15 +199,18 @@ Specify what to exclude from processing:
 
 ```yaml
 exclude:
+  - .secrets            # Secrets file for local deployment
   - .github            # GitHub workflow files
   - .output            # Build output directory
   - .vinxi             # Vinxi build cache
+  - .solidbase         # Theme build directory
+  - .git               # Git directory
+  - .gitignore         # Git ignore file
   - node_modules       # Dependencies
   - scripts            # Build scripts
   - tmp                # Temporary files
   - _config.yml        # Configuration file
   - app.config.ts      # App configuration
-  - build.ts           # Build scripts
   - package.json       # Package manifest
   - package-lock.json  # Lock file
   - pnpm-lock.yaml     # PNPM lock file
@@ -171,9 +234,9 @@ hero:
       link: /docs
     - theme: alt
       text: GitHub
-      link: https://github.com/yourusername/mdx-sitegen-solidbase
+      link: https://github.com/nikescar/mdx-sitegen-solidbase
   image:
-    src: https://your-domain.com/logo.png
+    src: https://mdx-sitegen-solidbase.pages.dev/resources/logo.png
 
 features:
   - 
@@ -199,9 +262,9 @@ Configure the main navigation menu:
 ```yaml
 theme_config:
   nav:
-    Docs: /mdx-sitegen-solidbase/docs
-    Readme: /mdx-sitegen-solidbase/readme
-    Credits: /mdx-sitegen-solidbase/credits
+    Docs: /docs
+    Readme: /readme
+    Credits: /credits
     # Custom pages can be added:
     # Blog: /blog
     # Packages: /packages
@@ -229,7 +292,7 @@ Add social media links to your site:
 ```yaml
 theme_config:
   social_links:
-    gitHub: 'https://github.com/username'
+    gitHub: 'https://github.com/nikescar/mdx-sitegen-solidbase'
     discord: 'https://discord.gg/your-server'
     # Other social links can be added:
     # twitter: 'https://twitter.com/username'
@@ -242,7 +305,7 @@ Configure the theme source repository:
 
 ```yaml
 # Theme upstream repository
-theme_upstream: 'https://github.com/yourusername/mdx-sitegen-solidbase'
+theme_upstream: 'https://github.com/nikescar/mdx-sitegen-solidbase'
 ```
 
 ## Asset Management
@@ -280,6 +343,9 @@ site_url: 'https://yourusername.github.io/mdx-sitegen-solidbase/'
 
 # ✅ Custom domain
 site_url: 'https://your-custom-domain.com'
+
+# ✅ Cloudflare Pages
+site_url: 'https://your-project.pages.dev/'
 ```
 
 ### Language Configuration
@@ -293,12 +359,13 @@ lang: en
 
 ### Build Optimization
 The build process automatically handles:
-- Installing npm dependencies
-- Building with Vinxi
-- Processing include/exclude rules
+- Installing npm dependencies via pnpm
+- Building with Vinxi and SolidJS
+- Processing include/exclude rules from `_config.yml`
 - Copying assets and favicon
-- Generating optimized output
-- 404 page redirection setup
+- Generating optimized static output
+- Setting up 404 page redirection for SPA routing
+- Multiple deployment provider support (GitHub Pages, Firebase, Cloudflare Pages)
 
 ### Environment Variables
 You can use GitHub repository secrets for sensitive configuration:
@@ -320,7 +387,11 @@ include:
   - CREDITS.md
 
 exclude:
+  - .secrets
   - .github
+  - .output
+  - .vinxi
+  - .solidbase
   - node_modules
   - src
   - tmp
@@ -335,7 +406,11 @@ include:
   - resources
 
 exclude:
+  - .secrets
   - .github
+  - .output
+  - .vinxi
+  - .solidbase
   - node_modules
   - drafts
 ```
@@ -352,7 +427,11 @@ include:
   - README.md
 
 exclude:
+  - .secrets
   - .github
+  - .output
+  - .vinxi
+  - .solidbase
   - node_modules
   - src
   - tmp

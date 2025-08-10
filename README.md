@@ -116,13 +116,14 @@ Run build and upload. this will upload gh_pages branch in target repository.
 $ bash ghworkflow.sh
 ```
 
-Change repository.
+Change repository page settings.
 ```
 change github repository page settigns.
 Target Repository > Settings > Pages > Build and dployment
 change Source -> Deploy from a branch.
 change Branch -> gh-pages.
 ```
+Visit website!
 
 ### 4-6. Local to Firebase
 * nitro usage suggests firebase app hosting. this projects only needed static SPA hosting. we will use hosting rather than app hosting.
@@ -154,18 +155,33 @@ Run build and upload. this will upload gh_pages branch in target repository.
 ```bash
 $ bash ghworkflow.sh
 ```
+Visit website!
 
-Change repository.
+### 4-7. Local to Cloudflare pages
+
+Add follwing configs to _config.yml. token part will be replaced with data in .secrets.
+```yaml
+# cloudflare pages deployment settings # https://dash.cloudflare.com/
+# 1. Create a Cloudflare Pages project(Computing > Pages > Direct Upload *pass submision by uploading the zip file provided on the page.)
+# 2. Generate a Cloudflare Pages token and save it as CLOUDFLARE_PAGES_TOKEN secret in your GitHub repository
+deployment: # https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/#generate-an-api-token
+  provider: 'cloudflare-pages'
+  project: 'mdx-sitegen-solidbase'
+  cloudflare_pages_token: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
 ```
-change github repository page settigns.
-Target Repository > Settings > Pages > Build and dployment
-change Source -> Deploy from a branch.
-change Branch -> gh-pages.
+
+Copy token to .secrets.
+```bash
+#.secrets
+CLOUDFLARE_PAGES_TOKEN="<TOKEN API>"
 ```
 
-### 4-7. Local to Deno Deploy
+Run build and upload. this will upload gh_pages branch in target repository.
+```bash
+$ bash ghworkflow.sh
+```
 
-
+Visit website!
 
 ## 5. More Link
 

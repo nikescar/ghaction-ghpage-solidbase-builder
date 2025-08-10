@@ -55,7 +55,7 @@ async function remotebuild() {
     
     // Step 2: Run the build workflow
     console.log('\n🔧 Step 2: Running build workflow...');
-    await execCommand('bash ghworkflow.sh --src-path ../', '.solidbase');
+    await execCommand('bash ghworkflow.sh --src-path ..', '.solidbase');
     
     console.log('\n🎉 Remote build completed successfully!');
     console.log('📁 Check the .solidbase directory for build output');

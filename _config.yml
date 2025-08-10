@@ -70,10 +70,10 @@ theme_config:
 # 1. Create a GitHub repository
 # 2. Enable GitHub Pages in the repository settings
 # 3. Generate a personal access token with "repo" and "workflow" scopes and save it as GITHUB_TOKEN secret in your GitHub repository
-deployment: # https://github.com/settings/personal-access-tokens
-  provider: 'github-page'
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  github_repo: 'nikescar/mdx-sitegen-solidbase'
+# deployment: # https://github.com/settings/personal-access-tokens
+#   provider: 'github-page'
+#   github_token: ${{ secrets.GITHUB_TOKEN }}
+#   github_repo: 'nikescar/mdx-sitegen-solidbase'
 
 # firebase deploy(firebase) settings # https://console.firebase.google.com/u/0/
 # 1. Create a Firebase project
@@ -87,9 +87,9 @@ deployment: # https://github.com/settings/personal-access-tokens
 # cloudflare pages deployment settings # https://dash.cloudflare.com/
 # 1. Create a Cloudflare Pages project(Computing > Pages > Direct Upload *pass submision by uploading the zip file provided on the page.)
 # 2. Generate a Cloudflare Pages token and save it as CLOUDFLARE_PAGES_TOKEN secret in your GitHub repository
-# deployment: # https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/#generate-an-api-token
-#   provider: 'cloudflare-pages'
-#   project: 'mdx-sitegen-solidbase'
-#   cloudflare_pages_token: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+deployment: # https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/#generate-an-api-token
+  provider: 'cloudflare-pages'
+  project: 'mdx-sitegen-solidbase'
+  cloudflare_pages_token: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
 
 

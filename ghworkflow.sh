@@ -59,7 +59,6 @@ fi
 # echo "Cleaning routes folder in examples in theme routes..."
 rm -rf ./src/routes/*
 cp -rp "${src_path}/_config.yml" ./
-source "${src_path}/.secrets"
 
 # 1. Copying included files from ../ to ./src/routes...
 inclusion_list=$(${yq_bin_path} eval '.include[]' _config.yml)
@@ -111,7 +110,6 @@ done
 
 ls -alth ./.output/public
 
-
 # if run with --no-deploy, skip deployment
 if [[ ${no_deploy} != 0 ]]; then
   echo "Skipping deployment as --no-deploy flag is set."
@@ -121,7 +119,25 @@ fi
 # 6. Deployment
 # if deployment provider is firebase, run firebase deploy
 deployment_provider=$(${yq_bin_path} eval '.deployment.provider' _config.yml)
-source .secrets
+
+# if any of GITHUB_TOKEN CLOUDFLARE_PAGES_TOKEN FIREBASE_SERVICE_ACCOUNT_KEY exsits, do not source .secrets
+if [ -z "$CLOUDFLARE_PAGES_TOKEN" ] && [ -z "$GITHUB_TOKEN" ] && [ -z "$FIREBASE_SERVICE_ACCOUNT_KEY" ]; then
+  # source .secrets file if exists
+  if [[ -f ".secrets" ]]; then
+    echo "Sourcing .secrets file..."
+    source ".secrets"
+  elif [[ -f "../.secrets" ]]; then
+    echo "Sourcing ../.secrets file..."
+    source "../.secrets"
+  else
+    echo "No .secrets file found. Please create one with the required secrets."
+    echo "Required secrets: CLOUDFLARE_PAGES_TOKEN || GITHUB_TOKEN || FIREBASE_SERVICE_ACCOUNT_KEY"
+    exit 1
+  fi
+fi
+echo "CLOUDFLARE_PAGES_TOKEN: $CLOUDFLARE_PAGES_TOKEN"
+echo "GITHUB_TOKEN: $GITHUB_TOKEN"
+echo "FIREBASE_SERVICE_ACCOUNT_KEY: $FIREBASE_SERVICE_ACCOUNT_KEY"
 if [ "$deployment_provider" == "firebase" ]; then
   # get FIREBASE_SERVICE_ACCOUNT_KEY from .secrets and get project and service_account_key_text from _config.yml
   # and replace FIREBASE_SERVICE_ACCOUNT_KEY from _config.yml with the value from .secrets
@@ -131,14 +147,15 @@ if [ "$deployment_provider" == "firebase" ]; then
     echo "Firebase project is not set. Please set it in _config.yml."
     exit 1
   fi
+  if [ -n "$FIREBASE_SERVICE_ACCOUNT_KEY" ]; then
+    echo "Using FIREBASE_SERVICE_ACCOUNT_KEY from environment variable."
+    firebase_service_account_key=$FIREBASE_SERVICE_ACCOUNT_KEY
+  fi
   if [ -z "$firebase_service_account_key" ]; then
     echo "Firebase service account key is not set. Please set it in _config.yml."
     exit 1
   fi
-  if [ -z "$FIREBASE_SERVICE_ACCOUNT_KEY" ]; then
-    echo "FIREBASE_SERVICE_ACCOUNT_KEY is not set. Please set it in .secrets."
-    exit 1
-  fi
+
   echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 --decode > ./firebase-service-account_temp.json
   if ! command -v firebase &> /dev/null; then
     echo "Firebase CLI could not be found, installing..."
@@ -193,7 +210,12 @@ EOF
 #   npx deno deploy --project mdx-sitegen-solidbase --token "$deno_deploy_token" --config ./deno.json
 elif [ "$deployment_provider" == "github-page" ]; then
   echo "Deploying to GitHub Pages..."
-  
+
+  if [[ "$GITHUB_ACTIONS" = "true" ]]; then
+    echo "Running in GitHub Actions environment. Please use github actions to deploy."
+    exit 1
+  fi
+
   # 404 redirection. Copying 404.html to the public directory...
   rm -rf ./.output/public/404.html*
   # get 404_subsite_urls from _config.yml and replace _s=[]; line replace with _s=[ url1, url2, ...];
@@ -204,10 +226,6 @@ elif [ "$deployment_provider" == "github-page" ]; then
   # get github_token from .secrets and get github_token and github_repo from _config.yml
   # and replace github_token from _config.yml with the value from .secrets
   github_token=$(${yq_bin_path} eval '.deployment.github_token' _config.yml)
-  if [ -z "$github_token" ]; then
-    echo "GitHub token is not set. Please set it in _config.yml."
-    exit 1
-  fi
   github_repo=$(${yq_bin_path} eval '.deployment.github_repo' _config.yml)
   if [ -z "$github_repo" ]; then
     echo "GitHub repository is not set. Please set it in _config.yml."
@@ -216,6 +234,10 @@ elif [ "$deployment_provider" == "github-page" ]; then
   if [ -n "$GITHUB_TOKEN" ]; then
     echo "Using GITHUB_TOKEN from environment variable."
     github_token=$GITHUB_TOKEN
+  fi
+  if [ -z "$github_token" ]; then
+    echo "GitHub token is not set. Please set it in _config.yml."
+    exit 1
   fi
 
   if ! command -v gh-pages &> /dev/null; then
@@ -228,10 +250,6 @@ elif [ "$deployment_provider" == "github-page" ]; then
 elif [ "$deployment_provider" == "cloudflare-pages" ]; then
   echo "Deploying to Cloudflare Pages..."
   cloudflare_pages_token=$(${yq_bin_path} eval '.deployment.cloudflare_pages_token' _config.yml)
-  if [ -z "$cloudflare_pages_token" ]; then
-    echo "Cloudflare Pages token is not set. Please set it in _config.yml."
-    exit 1
-  fi
   cloudflare_project=$(${yq_bin_path} eval '.deployment.project' _config.yml)
   if [ -z "$cloudflare_project" ]; then
     echo "Cloudflare Pages project is not set. Please set it in _config.yml."
@@ -240,6 +258,10 @@ elif [ "$deployment_provider" == "cloudflare-pages" ]; then
   if [ -n "$CLOUDFLARE_PAGES_TOKEN" ]; then
     echo "Using CLOUDFLARE_PAGES_TOKEN from environment variable."
     cloudflare_pages_token=$CLOUDFLARE_PAGES_TOKEN
+  fi
+  if [ -z "$cloudflare_pages_token" ]; then
+    echo "Cloudflare Pages token is not set. Please set it in _config.yml."
+    exit 1
   fi
 
   if ! command -v wrangler &> /dev/null; then

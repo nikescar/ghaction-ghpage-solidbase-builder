@@ -65,6 +65,8 @@ npm run build
 # Serve locally
 cd .output/public && npx serve
 ```
+
+```yaml
 description: Solidbase Theme for markdown documents to site converter for GitHub Pages.
 issue_link: "https://github.com/nikescar/mdx-sitegen-solidbase/issues"
 edit_path: "https://github.com/nikescar/mdx-sitegen-solidbase/edit/main/:path"

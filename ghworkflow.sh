@@ -59,6 +59,7 @@ fi
 # echo "Cleaning routes folder in examples in theme routes..."
 rm -rf ./src/routes/*
 cp -rp "${src_path}/_config.yml" ./
+source "${src_path}/.secrets"
 
 # 1. Copying included files from ../ to ./src/routes...
 inclusion_list=$(${yq_bin_path} eval '.include[]' _config.yml)
